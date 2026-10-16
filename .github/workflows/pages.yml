@@ -1,4 +1,7 @@
-name: Deploy site to GitHub Pages
+name: Publish site to gh-pages
+
+# Every push that touches site/ republishes the folder to the gh-pages branch,
+# which GitHub Pages serves at https://dnltrrssocinex.github.io/Lunarcore/
 
 on:
   push:
@@ -9,30 +12,24 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Configure Pages (creates the Pages site on first run)
-        uses: actions/configure-pages@v5
+      - name: Add .nojekyll so Pages serves files as-is
+        run: touch site/.nojekyll
+      - name: Push site/ to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          enablement: true
-      - name: Upload the site folder
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "Publish site from ${{ github.sha }}"
