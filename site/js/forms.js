@@ -70,17 +70,17 @@
   });
 
   const success = (host, { title, text, rows: list, ics, again, fallbackHref }) => {
-    host.innerHTML = '<div class="flow-grid"><section class="card box flow-box" data-s="done" aria-live="polite"><div class="pnl done"><span class="ring"></span><span class="okc big">' +
+    host.innerHTML = '<div class="flow-grid"><section class="card box flow-box" data-s="done" aria-live="polite"><div class="pnl done"><span class="okring"></span><span class="okc big">' +
       '<svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M20 6 9 17l-5-5"/></svg></span>' +
       '<h2>' + esc(title) + '</h2><p class="txt">' + esc(text) + '</p>' + rows(list) +
-      '<div class="acts">' + (ics ? '<button class="btn btn-primary cal" type="button">' + ic('cal', 16) + '<span>Add to calendar</span></button>' : '') +
+      '<div class="acts">' + (ics ? '<button class="btn btn-primary addcal" type="button">' + ic('cal', 16) + '<span>Add to calendar</span></button>' : '') +
       (fallbackHref ? '<a class="btn btn-primary" href="' + fallbackHref + '">' + ic('mail', 16) + '<span>Send by email</span></a>' : '') +
       '<a class="btn btn-ghost" href="index.html">Back to home</a></div>' +
       (again ? '<a class="lk again" href="' + esc(again.href) + '">' + esc(again.label) + '</a>' : '') +
       '</div></section>' + nextPanel() + '</div>';
     host.hidden = false;
     host.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    const cal = host.querySelector('.cal');
+    const cal = host.querySelector('.addcal');
     if (cal) cal.addEventListener('click', () => { downloadIcs(ics); cal.classList.add('ok'); cal.querySelector('span').textContent = 'Added to calendar'; });
   };
 
