@@ -66,6 +66,8 @@
     const v = byId[el.dataset.vid];
     if (!v) return;
     el.dataset.video = v.src; el.dataset.name = v.title; el.dataset.orient = v.orient;
+    el.setAttribute('data-preview', '');
+    el.setAttribute('data-cursor', 'Watch');
     const img = el.querySelector('img');
     if (img) { img.src = v.poster; img.alt = v.title; }
     const nm = el.querySelector('.nm');
