@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marquee CTA band</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Marquee CTA band */
+.d{display:grid;place-items:center;background:var(--ml-surface)}
+.d .win{position:relative;width:86%;height:86%;display:flex;flex-direction:column;background:var(--ml-bg);border-radius:12px;box-shadow:var(--ml-shadow);overflow:hidden}
+.d .bar{flex:none;display:flex;align-items:center;gap:4px;padding:7px 10px;border-bottom:1px solid var(--ml-line);background:var(--ml-bg);position:relative;z-index:6}
+.d .bar i{width:6px;height:6px;border-radius:50%;background:var(--ml-bar)}
+.d .bar .url{margin-left:8px;width:42%;height:6px;border-radius:3px;background:var(--ml-bar-2)}
+.d .pg{position:relative;flex:1;min-height:0;overflow:hidden}
+.d .sc{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;container-type:size}
+.d .sc::-webkit-scrollbar{display:none}
+.d .r{height:6px;margin:8px 12px;border-radius:3px;background:var(--ml-bar-2)}
+.d .r.s{width:52%}
+.d .r.m{width:74%}
+.d .r.t{height:10px;width:58%;background:var(--ml-bar)}
+.d .im{position:relative;overflow:hidden;margin:10px 12px;height:64px;border-radius:10px;background:linear-gradient(180deg,var(--ml-accent-soft),var(--ml-bar-2))}
+.d .im::before{content:"";position:absolute;right:20%;top:18%;width:13px;height:13px;border-radius:50%;background:var(--ml-accent-line)}
+.d .im::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:var(--ml-bar);clip-path:polygon(0 100%,0 62%,24% 20%,46% 64%,64% 36%,100% 70%,100% 100%)}
+.d .lg{flex:none;width:11px;height:11px;border-radius:4px;background:var(--ml-grad)}
+.d button{appearance:none;border:0;background:none;cursor:pointer}
+
+.d .pg.col{display:flex;flex-direction:column}
+.d .tp{flex:none;padding-top:6px}
+.d .tp .r{margin:7px 12px}
+.d .band{flex:none;display:block;overflow:hidden;padding:16px 0 15px;margin-top:6px;background:var(--ml-grad);color:#fff;cursor:pointer}
+.d .mq{display:flex;width:max-content;animation:mq 11s linear infinite}
+.d .seq{display:flex;align-items:center;flex:none;gap:18px;padding-right:18px;white-space:nowrap}
+.d .seq span{font:600 34px/1.15 var(--ml-font);letter-spacing:-.045em}
+.d .seq svg{flex:none;width:26px;height:26px;opacity:.9}
+.d .band:hover .mq{animation-play-state:paused}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.d .fb{flex:1;display:flex;flex-direction:column;justify-content:center;gap:9px;padding:0 14px;background:var(--ml-surface)}
+.d .fl{display:flex;gap:16px;font:500 11px/1 var(--ml-font);color:var(--ml-ink-2)}
+.d .cp{font-size:10px;color:var(--ml-muted)}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="win"><div class="bar"><i></i><i></i><i></i><span class="url"></span></div><div class="pg col"><div class="tp"><p class="r t"></p><p class="r m"></p></div>
+<a class="band"><div class="mq"><div class="seq"><span>Let's build something</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg><span>Let's build something</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></div><div class="seq" aria-hidden="true"><span>Let's build something</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg><span>Let's build something</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></div></div></a>
+<footer class="fb"><div class="fl"><a>Product</a><a>Pricing</a><a>Docs</a><a>Contact</a></div><span class="cp">2026 Northwind</span></footer></div></div>
+</div></div>
+</body>
+</html>

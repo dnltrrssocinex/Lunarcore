@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fading quotes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Fading quotes */
+.d{background:var(--ml-surface)}.d .av{position:relative;flex:none;width:26px;height:26px;border-radius:50%;overflow:hidden}
+.d .av svg{width:100%;height:100%;display:block}
+.d .sr{display:inline-flex;gap:1px;color:var(--ml-accent)}
+.d .sr svg{width:11px;height:11px}.d .by{display:flex;align-items:center;gap:8px}
+.d .nm{display:grid;gap:3px}
+.d .nm b{font:600 11px/1 var(--ml-font);color:var(--ml-ink)}
+.d .nm span{font:500 10px/1 var(--ml-font);color:var(--ml-muted)}
+.d .qs{position:absolute;inset:0}
+.d .q{position:absolute;inset:0;display:grid;align-content:center;justify-items:center;gap:14px;padding:0 13%;text-align:center;opacity:0;animation:qf 12s infinite both;animation-delay:calc(var(--i) * 4s)}
+.d .qi{width:24px;height:24px;color:var(--ml-accent-line)}
+.d .qi svg{width:100%;height:100%;display:block}
+.d blockquote{font:600 19px/1.28 var(--ml-font);letter-spacing:-.03em;color:var(--ml-ink)}
+.d .dt{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:5px}
+.d .dt i{width:6px;height:6px;border-radius:999px;background:var(--ml-bar);animation:dt 12s infinite both;animation-delay:calc(var(--i) * 4s)}
+@keyframes qf{0%{opacity:0;transform:translateY(12px)}7%,30%{opacity:1;transform:none}38%,100%{opacity:0;transform:translateY(-10px)}}
+@keyframes dt{0%{width:6px;background:var(--ml-bar)}4%,33%{width:20px;background:var(--ml-accent)}38%,100%{width:6px;background:var(--ml-bar)}}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="qs"><figure class="q" style="--i:0"><span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg></span><blockquote>We cut onboarding from two weeks to three days.</blockquote><figcaption><div class="by"><div class="av"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" fill="#CFE3FF"/><circle cx="20" cy="16" r="7" fill="#7FAEEF"/><path d="M6 40c0-8 6-13 14-13s14 5 14 13z" fill="#7FAEEF"/></svg></div><div class="nm"><b>Maya R.</b><span>Head of Ops</span></div></div></figcaption></figure><figure class="q" style="--i:1"><span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg></span><blockquote>Setup took an afternoon, and support answered in minutes.</blockquote><figcaption><div class="by"><div class="av"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" fill="#E1EEFF"/><circle cx="20" cy="16" r="7" fill="#4F86DB"/><path d="M6 40c0-8 6-13 14-13s14 5 14 13z" fill="#4F86DB"/></svg></div><div class="nm"><b>Tomas K.</b><span>Founder</span></div></div></figcaption></figure><figure class="q" style="--i:2"><span class="qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg></span><blockquote>Our team stopped asking where the numbers were.</blockquote><figcaption><div class="by"><div class="av"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" fill="#B5D2FF"/><circle cx="20" cy="16" r="7" fill="#2F72D6"/><path d="M6 40c0-8 6-13 14-13s14 5 14 13z" fill="#2F72D6"/></svg></div><div class="nm"><b>Priya N.</b><span>Analytics lead</span></div></div></figcaption></figure></div><div class="dt"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i></div>
+</div></div>
+</body>
+</html>

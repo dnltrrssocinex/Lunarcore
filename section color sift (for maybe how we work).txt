@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section color shift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Section color shift */
+.d{display:grid;place-items:center;background:var(--ml-surface)}
+.d .win{position:relative;width:84%;height:84%;display:flex;flex-direction:column;background:var(--ml-bg);border-radius:12px;box-shadow:var(--ml-shadow);overflow:hidden}
+.d .bar{display:flex;align-items:center;gap:4px;padding:8px 10px;border-bottom:1px solid var(--ml-line)}
+.d .bar i{width:6px;height:6px;border-radius:50%;background:var(--ml-bar)}
+.d .bar .url{margin-left:8px;width:42%;height:6px;border-radius:3px;background:var(--ml-bar-2)}
+.d .sc{position:relative;flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;container-type:size}
+.d .sc::-webkit-scrollbar{display:none}
+.d .r{height:6px;margin:9px 12px;border-radius:3px;background:var(--ml-bar-2)}
+.d .r.s{width:52%}
+.d .r.m{width:74%}
+.d .im{position:relative;overflow:hidden;margin:10px 12px;height:60px;border-radius:10px;background:linear-gradient(180deg,var(--ml-accent-soft),var(--ml-bar-2))}
+.d .im::before{content:"";position:absolute;right:20%;top:18%;width:14px;height:14px;border-radius:50%;background:var(--ml-accent-line)}
+.d .im::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:var(--ml-bar);clip-path:polygon(0 100%,0 62%,24% 20%,46% 64%,64% 36%,100% 70%,100% 100%)}
+
+.d .sc{--bgc:var(--ml-bg);--fg:var(--ml-ink);--br:var(--ml-bar-2);background-color:var(--bgc);transition:background-color .7s ease}
+.d .sc[data-t="1"]{--bgc:var(--ml-accent-soft);--br:var(--ml-accent-line)}
+.d .sc[data-t="2"]{--bgc:var(--ml-accent-line);--br:var(--ml-accent-soft)}
+.d .sc[data-t="3"]{--bgc:var(--ml-accent);--fg:#fff;--br:rgba(255,255,255,.5)}
+.d section{height:100cqh;display:flex;flex-direction:column;justify-content:center;padding-left:6px}
+.d h5{margin:0 12px 8px;font:700 clamp(20px,9cqw,40px)/1.05 var(--ml-font);letter-spacing:-.035em;color:var(--fg);transition:color .7s ease}
+.d section .r{background-color:var(--br);transition:background-color .7s ease}
+.d .dots{position:absolute;right:8px;top:50%;margin-top:-22px;display:flex;flex-direction:column;gap:6px}
+.d .dots i{width:5px;height:5px;border-radius:50%;background:var(--ml-bar);transition:transform var(--ml-spring-dur) var(--ml-spring),background-color .3s ease}
+.d .dots i.on{background:var(--ml-accent);transform:scaleY(2.6)}
+.d .sc[data-t="3"] ~ .dots i{background:rgba(255,255,255,.45)}
+.d .sc[data-t="3"] ~ .dots i.on{background:#fff}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="win"><div class="bar"><i></i><i></i><i></i><span class="url"></span></div>
+  <div class="sc" data-t="0">
+    <section><h5>Design</h5><p class="r m"></p><p class="r s"></p></section>
+    <section><h5>Build</h5><p class="r m"></p><p class="r s"></p></section>
+    <section><h5>Ship</h5><p class="r m"></p><p class="r s"></p></section>
+    <section><h5>Grow</h5><p class="r m"></p><p class="r s"></p></section>
+  </div>
+  <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+</div>
+</div></div>
+<script>
+((root) => {
+    const sc = root.querySelector('.sc');
+    let userUntil = 0;
+    const yieldToUser = () => (userUntil = performance.now() + 2500);
+    sc.addEventListener('wheel', yieldToUser, { passive: true });
+    sc.addEventListener('pointerdown', yieldToUser);
+    sc.addEventListener('touchstart', yieldToUser, { passive: true });
+    const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+    let update = () => {};
+    const dots = [...root.querySelectorAll('.dots i')];
+    update = () => {
+      const i = Math.max(0, Math.min(3, Math.floor((sc.scrollTop + sc.clientHeight * 0.5) / Math.max(1, sc.clientHeight))));
+      if (sc.dataset.t === String(i)) return;
+      sc.dataset.t = String(i);
+      dots.forEach((d, n) => d.classList.toggle('on', n === i));
+    };
+    sc.addEventListener('scroll', () => update(), { passive: true });
+    const period = 9000;
+    let start = performance.now();
+    const loop = (t) => {
+      if (!root.isConnected) return;
+      requestAnimationFrame(loop);
+      if (root.dataset.paused || t < userUntil) {
+        start = t - ((t - start) % period);
+        return;
+      }
+      const p = ((t - start) % period) / period;
+      const max = sc.scrollHeight - sc.clientHeight;
+      // hold at top, glide down, hold, glide back
+      const k = p < 0.08 ? 0 : p < 0.5 ? ease((p - 0.08) / 0.42) : p < 0.58 ? 1 : 1 - ease((p - 0.58) / 0.42);
+      sc.scrollTop = k * max;
+    };
+    update();
+    requestAnimationFrame(loop);
+  })(document.querySelector('.d'));
+</script>
+</body>
+</html>

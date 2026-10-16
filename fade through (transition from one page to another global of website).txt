@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fade through</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Fade through */
+.d{display:grid;place-items:center;background:var(--ml-surface)}
+.d .win{position:relative;width:84%;height:84%;display:flex;flex-direction:column;background:var(--ml-bg);border-radius:12px;box-shadow:var(--ml-shadow);overflow:hidden}
+.d .bar{display:flex;align-items:center;gap:4px;padding:8px 10px;border-bottom:1px solid var(--ml-line)}
+.d .bar i{width:6px;height:6px;border-radius:50%;background:var(--ml-bar)}
+.d .bar .url{margin-left:8px;width:42%;height:6px;border-radius:3px;background:var(--ml-bar-2)}
+.d .vp{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--ml-surface)}
+.d .pg{position:absolute;inset:0;display:flex;flex-direction:column;gap:7px;padding:10px 12px;background:var(--ml-bg)}
+.d .pg .lb{font:600 9px/1 var(--ml-mono);color:var(--ml-muted);letter-spacing:.05em;text-transform:uppercase}
+.d .nv{display:flex;align-items:center;gap:6px}
+.d .nv b{width:9px;height:9px;border-radius:3px;background:var(--ml-bar)}
+.d .nv em{margin-left:auto;width:22%;height:5px;border-radius:3px;background:var(--ml-bar-2)}
+.d .hr{position:relative;flex:1;min-height:0;border-radius:9px;overflow:hidden;background:linear-gradient(180deg,var(--ml-accent-soft),var(--ml-bar-2))}
+.d .hr u{position:absolute;right:20%;top:18%;width:13px;height:13px;border-radius:50%;background:var(--ml-accent-line)}
+.d .hr::after{content:"";position:absolute;left:0;right:0;bottom:0;height:48%;background:var(--ml-bar);clip-path:polygon(0 100%,0 60%,22% 20%,44% 62%,62% 34%,100% 70%,100% 100%)}
+.d .pg .r{flex:none;height:6px;margin:0;border-radius:3px;background:var(--ml-bar-2)}
+.d .pg .r.s{width:55%}
+.d .pg .r.m{width:76%}
+.d .tr{flex:none;display:flex;gap:6px;height:22%}
+.d .tr i{flex:1;border-radius:7px;background:var(--ml-bar-2)}
+.d .hd{position:relative;flex:none;height:40%;border-radius:9px;overflow:hidden;background:var(--ml-grad)}
+.d .hd u{position:absolute;left:18%;top:20%;width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.85)}
+.d .hd::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:rgba(255,255,255,.28);clip-path:polygon(0 100%,0 66%,26% 24%,48% 62%,70% 30%,100% 68%,100% 100%)}
+.d .pg .t{flex:none;height:9px;width:46%;border-radius:4px;background:var(--ml-bar)}
+.d .cd{flex:1;min-height:0;display:flex;gap:6px}
+.d .cd i{flex:1;border-radius:8px;background:var(--ml-surface);border:1px solid var(--ml-line)}
+
+.d .a{animation:fa 6s infinite var(--ml-ease)}
+.d .b{animation:fb 6s infinite var(--ml-ease)}
+@keyframes fa{0%,28%{opacity:1;transform:none}38%,86%{opacity:0;transform:scale(.97)}96%,100%{opacity:1;transform:none}}
+@keyframes fb{0%,36%{opacity:0;transform:scale(1.04)}50%,78%{opacity:1;transform:none}88%,100%{opacity:0;transform:scale(1.04)}}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="win"><div class="bar"><i></i><i></i><i></i><span class="url"></span></div><div class="vp"><div class="pg a"><div class="nv"><b></b><span class="lb">Home</span><em></em></div><div class="hr"><u></u></div><p class="r m"></p><p class="r s"></p><div class="tr"><i></i><i></i><i></i></div></div><div class="pg b"><span class="lb">Plans</span><div class="hd"><u></u></div><p class="t"></p><p class="r"></p><p class="r s"></p><div class="cd"><i></i><i></i></div></div></div></div>
+</div></div>
+</body>
+</html>

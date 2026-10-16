@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polaroid scatter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Polaroid scatter */
+.d{background:var(--ml-surface)}.d .im{position:absolute;inset:0;overflow:hidden}
+.d .im svg{width:100%;height:100%;display:block}
+.d .sc2{position:absolute;inset:0}
+.d .pl{position:absolute;width:36%;aspect-ratio:.86;height:auto;padding:5px 5px 0;border-radius:4px;background:#fff;box-shadow:var(--ml-shadow-lg);opacity:0;animation:drop 6.4s infinite both;animation-delay:calc(var(--i) * 300ms);z-index:calc(var(--i) + 1)}
+.d .pi{position:relative;height:calc(100% - 22px);border-radius:2px;overflow:hidden}
+.d .pl span{display:block;padding-top:6px;text-align:center;font:500 9.5px/1 var(--ml-mono);letter-spacing:.06em;color:var(--ml-muted)}
+.d .pl em{position:absolute;left:50%;top:-6px;width:34px;height:12px;margin-left:-17px;background:rgba(185,212,255,.7);transform:rotate(-4deg)}
+@keyframes drop{0%,3%{opacity:0;transform:translateY(-130%) rotate(calc(var(--r) * 3));animation-timing-function:var(--ml-bounce)}20%,82%{opacity:1;transform:rotate(var(--r));animation-timing-function:ease-in}94%,100%{opacity:0;transform:translateY(8px) rotate(var(--r))}}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="sc2"><div class="pl" style="left:6%;top:8%;--r:-8deg;--i:0"><div class="pi"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6E8FF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g1)"/><circle cx="34" cy="30" r="15" fill="#fff" opacity=".35"/><circle cx="34" cy="30" r="9" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#B7D3FA"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#8DB8F2"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#3F84EA"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#3F84EA" opacity=".9"/></svg></div></div><span>Spring</span></div><div class="pl" style="left:36%;top:4%;--r:5deg;--i:1"><div class="pi"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9EC4FF"/><stop offset="1" stop-color="#DCEBFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g4)"/><circle cx="24" cy="34" r="14" fill="#fff" opacity=".35"/><circle cx="24" cy="34" r="8" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#7EA9EA"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#4F86DB"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#2A63C4"/><path d="M96 74l5-14 5 14zM106 77l4-10 4 10z" fill="#2A63C4" opacity=".9"/></svg></div></div><span>Cafe</span><em></em></div><div class="pl" style="left:58%;top:14%;--r:-4deg;--i:2"><div class="pi"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCEAFF"/><stop offset="1" stop-color="#FBFDFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g7)"/><circle cx="70" cy="20" r="12" fill="#fff" opacity=".35"/><circle cx="70" cy="20" r="6" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#BCD5F9"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#86B1F0"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#2F6FD9"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#2F6FD9" opacity=".9"/></svg></div></div><span>Roof</span></div><div class="pl" style="left:14%;top:42%;--r:7deg;--i:3"><div class="pi"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8CBFF"/><stop offset="1" stop-color="#E9F2FF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g2)"/><circle cx="92" cy="40" r="13" fill="#fff" opacity=".35"/><circle cx="92" cy="40" r="7" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#8DB5F0"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#5F97E6"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#2F72D6"/><path d="M96 74l5-14 5 14zM106 77l4-10 4 10z" fill="#2F72D6" opacity=".9"/></svg></div></div><span>Night</span><em></em></div><div class="pl" style="left:46%;top:42%;--r:-6deg;--i:4"><div class="pi"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CCE2FF"/><stop offset="1" stop-color="#F6F9FF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g5)"/><circle cx="100" cy="24" r="16" fill="#fff" opacity=".35"/><circle cx="100" cy="24" r="10" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#AFCDF5"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#7FA9E9"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#3F7BE0"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#3F7BE0" opacity=".9"/></svg></div></div><span>Ferry</span></div></div>
+</div></div>
+</body>
+</html>

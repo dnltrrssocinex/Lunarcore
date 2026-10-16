@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat-style FAQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Chat-style FAQ */
+.d{display:grid;place-items:center;background:var(--ml-surface)}
+.d .win{display:grid;grid-template-rows:auto 1fr auto;width:90%;height:92%;border-radius:16px;background:var(--ml-bg);box-shadow:var(--ml-shadow-lg);overflow:hidden}
+.d .hd{display:flex;align-items:center;gap:8px;padding:10px 13px;border-bottom:1px solid var(--ml-line)}
+.d .av{width:20px;height:20px;border-radius:50%;background:var(--ml-grad)}
+.d .hd b{font:600 12px/1 var(--ml-font)}
+.d .hd span{margin-left:auto;font:500 10px/1 var(--ml-font);color:var(--ml-muted)}
+.d .th{display:flex;flex-direction:column;justify-content:flex-end;gap:7px;padding:10px 12px;overflow:hidden;min-height:0}
+.d .m{max-width:82%;padding:8px 11px;border-radius:14px;font:500 11.5px/1.35 var(--ml-font);animation:in 460ms var(--ml-bounce) both}
+.d .m.u{align-self:flex-end;background:var(--ml-grad);color:#fff;border-bottom-right-radius:5px;transform-origin:right bottom}
+.d .m.r{align-self:flex-start;background:var(--ml-surface);color:var(--ml-ink);border-bottom-left-radius:5px;transform-origin:left bottom;box-shadow:inset 0 0 0 1px var(--ml-line)}
+.d .dots{display:inline-flex;gap:3px;padding:3px 0}
+.d .dots i{width:5px;height:5px;border-radius:50%;background:var(--ml-muted);animation:bn 1s infinite ease-in-out both}
+.d .dots i:nth-child(2){animation-delay:.15s}.d .dots i:nth-child(3){animation-delay:.3s}
+.d .chips{display:flex;gap:6px;padding:9px 12px 11px;border-top:1px solid var(--ml-line)}
+.d .chips button{white-space:nowrap;appearance:none;cursor:pointer;border:0;padding:7px 10px;border-radius:99px;font:600 10.5px/1 var(--ml-font);color:var(--ml-accent-ink);background:var(--ml-accent-soft);transition:transform var(--ml-spring-dur) var(--ml-spring)}
+.d .chips button:active{transform:scale(.95);transition-duration:90ms}
+.d .chips button:focus-visible{outline:2px solid var(--ml-accent);outline-offset:2px}
+@keyframes in{0%{opacity:0;transform:translateY(10px) scale(.9)}100%{opacity:1;transform:none}}
+@keyframes bn{0%,70%,100%{transform:translateY(0);opacity:.45}35%{transform:translateY(-3px);opacity:1}}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="win"><div class="hd"><i class="av"></i><b>Help</b><span>Typically replies instantly</span></div><div class="th"></div><div class="chips"><button type="button">Cancel anytime?</button><button type="button">Refunds?</button></div></div>
+</div></div>
+<script>
+((root) => {
+    const th = root.querySelector('.th');
+    const btns = [...root.querySelectorAll('.chips button')];
+    const QA = [
+      ['Can I cancel anytime?', 'Yes. Cancel from Billing in two clicks, no fees.'],
+      ['Do you offer refunds?', 'Full refund within 30 days of purchase.'],
+      ['Is there a free trial?', 'Every plan starts with 14 free days.'],
+    ];
+    let busy = false;
+    let hold = 0;
+    let gen = 0;
+    const wait = (ms) => new Promise((res) => {
+      const t0 = Date.now();
+      const step = () => {
+        if (!root.isConnected) return;
+        if (root.dataset.paused) {
+          setTimeout(step, 200);
+          return;
+        }
+        if (Date.now() - t0 >= ms) return res();
+        setTimeout(step, Math.min(40, ms));
+      };
+      step();
+    });
+    const bubble = (cls, txt) => {
+      const m = document.createElement('div');
+      m.className = 'm ' + cls;
+      m.textContent = txt;
+      th.appendChild(m);
+      while (th.children.length > 3) th.removeChild(th.firstChild);
+      return m;
+    };
+    const ask = async (i) => {
+      busy = true;
+      const my = ++gen;
+      bubble('u', QA[i][0]);
+      await wait(500);
+      const r = bubble('r', '');
+      r.innerHTML = '<span class="dots"><i></i><i></i><i></i></span>';
+      await wait(900);
+      r.textContent = '';
+      for (let c = 1; c <= QA[i][1].length; c++) {
+        if (my !== gen) return;
+        r.textContent = QA[i][1].slice(0, c);
+        await wait(24);
+      }
+      busy = false;
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => {
+      if (busy) return;
+      hold = Date.now() + 3500;
+      ask(i);
+    }));
+    let k = 0;
+    const loop = async () => {
+      while (root.isConnected) {
+        if (!busy && Date.now() > hold) {
+          if (k % 2 === 0) th.textContent = '';
+          await ask(k++ % 2 === 0 ? 0 : 1);
+          await wait(2200);
+        } else {
+          await wait(400);
+        }
+      }
+    };
+    setTimeout(loop, 500);
+  })(document.querySelector('.d'));
+</script>
+</body>
+</html>

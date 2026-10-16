@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thumbnail strip sync</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Thumbnail strip sync */
+.d{background:var(--ml-surface)}.d .im{position:absolute;inset:0;overflow:hidden}
+.d .im svg{width:100%;height:100%;display:block}.d button{appearance:none;border:0;background:none;cursor:pointer}
+.d .gs{position:absolute;inset:14px;display:flex;flex-direction:column;gap:10px}
+.d .mn{position:relative;flex:1;border-radius:14px;overflow:hidden;box-shadow:var(--ml-shadow-lg)}
+.d .sl{position:absolute;inset:0;opacity:0;transform:scale(1.06);transition:opacity .6s ease,transform .9s var(--ml-spring)}
+.d .sl.on{opacity:1;transform:none}
+.d .st{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.d .tb{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;opacity:.6;transition:opacity .3s ease}
+.d .tb.on{opacity:1}
+.d .ind{position:absolute;left:-3px;top:-3px;bottom:-3px;width:calc((100% - 24px) / 5 + 6px);border-radius:11px;border:2px solid var(--ml-accent);pointer-events:none;transform:translateX(calc(var(--n,0) * 100%));transition:transform .6s var(--ml-spring)}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="gs"><div class="mn"><div class="sl on"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFD9FF"/><stop offset="1" stop-color="#F3F8FF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g0)"/><circle cx="80" cy="26" r="17" fill="#fff" opacity=".35"/><circle cx="80" cy="26" r="11" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#A9C9F7"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#7FAEEF"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#5A92E4"/><path d="M96 74l5-14 5 14zM106 77l4-10 4 10z" fill="#5A92E4" opacity=".9"/></svg></div></div><div class="sl "><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E1EEFF"/><stop offset="1" stop-color="#F7FAFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g3)"/><circle cx="56" cy="22" r="18" fill="#fff" opacity=".35"/><circle cx="56" cy="22" r="12" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#C5DAF8"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#9CC0F2"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#70A5EC"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#70A5EC" opacity=".9"/></svg></div></div><div class="sl "><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CCE2FF"/><stop offset="1" stop-color="#F6F9FF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g5)"/><circle cx="100" cy="24" r="16" fill="#fff" opacity=".35"/><circle cx="100" cy="24" r="10" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#AFCDF5"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#7FA9E9"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#3F7BE0"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#3F7BE0" opacity=".9"/></svg></div></div><div class="sl "><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6E8FF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g1)"/><circle cx="34" cy="30" r="15" fill="#fff" opacity=".35"/><circle cx="34" cy="30" r="9" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#B7D3FA"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#8DB8F2"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#3F84EA"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#3F84EA" opacity=".9"/></svg></div></div><div class="sl "><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCEAFF"/><stop offset="1" stop-color="#FBFDFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g7)"/><circle cx="70" cy="20" r="12" fill="#fff" opacity=".35"/><circle cx="70" cy="20" r="6" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#BCD5F9"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#86B1F0"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#2F6FD9"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#2F6FD9" opacity=".9"/></svg></div></div></div><div class="st"><i class="ind"></i><button class="tb" type="button" aria-label="Photo 1"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BFD9FF"/><stop offset="1" stop-color="#F3F8FF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g0)"/><circle cx="80" cy="26" r="17" fill="#fff" opacity=".35"/><circle cx="80" cy="26" r="11" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#A9C9F7"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#7FAEEF"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#5A92E4"/><path d="M96 74l5-14 5 14zM106 77l4-10 4 10z" fill="#5A92E4" opacity=".9"/></svg></div></button><button class="tb" type="button" aria-label="Photo 2"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E1EEFF"/><stop offset="1" stop-color="#F7FAFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g3)"/><circle cx="56" cy="22" r="18" fill="#fff" opacity=".35"/><circle cx="56" cy="22" r="12" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#C5DAF8"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#9CC0F2"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#70A5EC"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#70A5EC" opacity=".9"/></svg></div></button><button class="tb" type="button" aria-label="Photo 3"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CCE2FF"/><stop offset="1" stop-color="#F6F9FF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g5)"/><circle cx="100" cy="24" r="16" fill="#fff" opacity=".35"/><circle cx="100" cy="24" r="10" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#AFCDF5"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#7FA9E9"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#3F7BE0"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#3F7BE0" opacity=".9"/></svg></div></button><button class="tb" type="button" aria-label="Photo 4"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D6E8FF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g1)"/><circle cx="34" cy="30" r="15" fill="#fff" opacity=".35"/><circle cx="34" cy="30" r="9" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#B7D3FA"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#8DB8F2"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#3F84EA"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#3F84EA" opacity=".9"/></svg></div></button><button class="tb" type="button" aria-label="Photo 5"><div class="im"><svg viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g7" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCEAFF"/><stop offset="1" stop-color="#FBFDFF"/></linearGradient></defs><rect width="120" height="90" fill="url(#g7)"/><circle cx="70" cy="20" r="12" fill="#fff" opacity=".35"/><circle cx="70" cy="20" r="6" fill="#fff" opacity=".95"/><path d="M0 60Q26 38 52 56T120 48V90H0Z" fill="#BCD5F9"/><path d="M0 72Q32 52 64 70T120 62V90H0Z" fill="#86B1F0"/><path d="M0 82Q40 68 80 80T120 76V90H0Z" fill="#2F6FD9"/><path d="M14 76l5-15 5 15zM24 78l4-11 4 11z" fill="#2F6FD9" opacity=".9"/></svg></div></button></div></div>
+</div></div>
+<script>
+((root) => {
+    const sl = [...root.querySelectorAll('.sl')];
+    const tb = [...root.querySelectorAll('.tb')];
+    const ind = root.querySelector('.ind');
+    let n = 0;
+    let user = 0;
+    const go = (i) => {
+      n = (i + sl.length) % sl.length;
+      ind.style.setProperty('--n', n);
+      sl.forEach((s, j) => s.classList.toggle('on', j === n));
+      tb.forEach((t, j) => t.classList.toggle('on', j === n));
+    };
+    tb.forEach((t, j) => t.addEventListener('click', () => { user = performance.now() + 2500; go(j); }));
+    go(0);
+    const tick = () => {
+      if (!root.isConnected) return;
+      if (!root.dataset.paused && performance.now() > user) go(n + 1);
+      setTimeout(tick, 1700);
+    };
+    setTimeout(tick, 1200);
+  })(document.querySelector('.d'));
+</script>
+</body>
+</html>

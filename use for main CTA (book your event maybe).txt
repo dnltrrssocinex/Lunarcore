@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Magnetic button</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Magnetic button */
+.d{background:var(--ml-surface)}
+.d .zone{position:absolute;inset:0;display:grid;place-items:center}
+.d .btn{appearance:none;border:0;cursor:pointer;padding:16px 34px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ml-ink);background:var(--ml-bg);box-shadow:var(--ml-shadow-lg);will-change:transform}
+.d .lb{display:block;will-change:transform}
+.d .btn:focus-visible{outline:2px solid var(--ml-accent);outline-offset:3px}
+.d .cur{position:absolute;left:0;top:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--ml-accent-soft);border:1.5px solid var(--ml-accent-2);pointer-events:none;transition:opacity .25s ease;opacity:1}
+.d .zone.real .cur{opacity:0}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="zone"><button class="btn" type="button"><span class="lb">Get in touch</span></button><i class="cur"></i></div>
+</div></div>
+<script>
+((root) => {
+    const zone = root.querySelector('.zone');
+    const btn = root.querySelector('.btn');
+    const lb = root.querySelector('.lb');
+    const cur = root.querySelector('.cur');
+    let real = false, px = 0, py = 0, t = 0;
+    const s = { x: 0, y: 0, vx: 0, vy: 0 };
+    zone.addEventListener('pointerenter', () => { real = true; zone.classList.add('real'); });
+    zone.addEventListener('pointerleave', () => { real = false; zone.classList.remove('real'); });
+    zone.addEventListener('pointermove', (e) => {
+      const r = zone.getBoundingClientRect();
+      px = e.clientX - r.left;
+      py = e.clientY - r.top;
+    });
+    const frame = () => {
+      if (!root.isConnected) return;
+      if (!root.dataset.paused) {
+        const w = zone.clientWidth, h = zone.clientHeight, cx = w / 2, cy = h / 2;
+        if (!real) {
+          t += 0.016;
+          px = cx + w * 0.4 * Math.cos(t);
+          py = cy + h * 0.26 * Math.sin(t);
+        }
+        const dx = px - cx, dy = py - cy;
+        const near = Math.hypot(dx, dy) < Math.max(80, w * 0.3);
+        const tx = near ? dx * 0.38 : 0, ty = near ? dy * 0.38 : 0;
+        s.vx += (tx - s.x) * 0.14; s.vy += (ty - s.y) * 0.14;
+        s.vx *= 0.76; s.vy *= 0.76;
+        s.x += s.vx; s.y += s.vy;
+        btn.style.transform = 'translate(' + s.x.toFixed(2) + 'px,' + s.y.toFixed(2) + 'px)';
+        lb.style.transform = 'translate(' + (s.x * 0.55).toFixed(2) + 'px,' + (s.y * 0.55).toFixed(2) + 'px)';
+        cur.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px)';
+      }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  })(document.querySelector('.d'));
+</script>
+</body>
+</html>

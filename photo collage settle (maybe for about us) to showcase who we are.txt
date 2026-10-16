@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photo collage settle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Photo collage settle */
+.d{display:grid;place-items:center;background:var(--ml-surface)}
+.d .win{width:88%;height:88%;display:flex;flex-direction:column;background:var(--ml-bg);border-radius:12px;box-shadow:var(--ml-shadow);overflow:hidden}
+.d .bar{display:flex;align-items:center;gap:4px;padding:8px 10px;border-bottom:1px solid var(--ml-line);flex:none}
+.d .bar i{width:6px;height:6px;border-radius:50%;background:var(--ml-bar)}
+.d .bar .url{margin-left:8px;width:40%;height:6px;border-radius:3px;background:var(--ml-bar-2)}
+.d .pg{position:relative;flex:1;overflow:hidden;background:var(--ml-bg)}
+.d .nv{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:6px;padding:8px 10px}
+.d .nv b{width:10px;height:10px;border-radius:3px;background:var(--ml-accent)}
+.d .nv span{width:14px;height:4px;border-radius:2px;background:var(--ml-bar)}
+.d .nv span:first-of-type{margin-left:auto}
+.d .cta{height:15px;width:54px;border-radius:999px;background:var(--ml-grad);box-shadow:0 4px 10px rgba(10,108,255,.25)}
+.d .b{height:5px;border-radius:3px;background:var(--ml-bar)}
+.d .b.s{width:40%}
+.d .b.m{width:66%}
+.d .hd{font:700 19px/1.08 var(--ml-font);letter-spacing:-.035em;color:var(--ml-ink)}
+.d .ac{color:var(--ml-accent)}
+
+.d .c{position:absolute;inset:0;padding-top:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;pointer-events:none;z-index:2}
+.d .c .hd{font-size:17px}
+.d .tl{position:absolute;padding:2px;border-radius:9px;background:var(--ml-bg);box-shadow:var(--ml-shadow);animation:cg 8s var(--ml-ease) infinite both;animation-delay:var(--d);z-index:1}
+.d .tl:hover{z-index:3}
+.d .t1{left:5%;top:15%;width:23%;height:30%}
+.d .t2{left:5%;top:52%;width:19%;height:36%}
+.d .t3{left:30%;top:13%;width:19%;height:19%}
+.d .t4{right:5%;top:15%;width:23%;height:37%}
+.d .t5{right:5%;top:58%;width:20%;height:30%}
+.d .t6{left:55%;top:13%;width:17%;height:21%}
+.d .t7{left:29%;bottom:9%;width:20%;height:20%}
+.d .t8{left:54%;bottom:9%;width:17%;height:19%}
+.d .ph{position:absolute;inset:2px;border-radius:7px;overflow:hidden;transition:transform var(--ml-spring-dur) var(--ml-spring)}
+.d .tl:hover .ph{transform:scale(1.1) rotate(-2.5deg)}
+.d .ph::before{content:"";position:absolute;width:26%;aspect-ratio:1;border-radius:50%;right:16%;top:16%;background:rgba(255,255,255,.88)}
+.d .ph::after{content:"";position:absolute;left:-10%;right:-10%;bottom:0;height:52%;background:rgba(255,255,255,.34);clip-path:polygon(0 100%,0 60%,26% 24%,48% 58%,70% 16%,100% 58%,100% 100%)}
+.d .p1{background:linear-gradient(160deg,var(--ml-accent-2),var(--ml-accent))}
+.d .p2{background:linear-gradient(180deg,var(--ml-accent-soft),var(--ml-accent-line))}
+.d .p2::before{background:var(--ml-accent)}
+.d .p3{background:linear-gradient(180deg,var(--ml-bar-2),var(--ml-bar))}
+.d .p3::before{background:var(--ml-accent-2)}
+.d .p4{background:linear-gradient(160deg,var(--ml-accent),var(--ml-accent-ink))}
+@keyframes cg{
+0%,18%{opacity:1;transform:none}
+26%{transform:translate(calc(var(--x) * .05),calc(var(--y) * .05)) rotate(var(--l))}
+36%,50%{transform:none}
+60%,64%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.7)}
+71%{opacity:1;transform:translate(calc(var(--x) * .12),calc(var(--y) * .12)) rotate(calc(var(--r) * -.25)) scale(1.04)}
+80%,100%{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="win"><div class="bar"><i></i><i></i><i></i><span class="url"></span></div><div class="pg "><div class="nv"><b></b><span></span><span></span><span></span></div><i class="tl t1" style="--x:-190%;--y:-130%;--r:-18deg;--l:-4deg;--d:0.00s"><b class="ph p1"></b></i><i class="tl t2" style="--x:-170%;--y:90%;--r:14deg;--l:3deg;--d:0.07s"><b class="ph p2"></b></i><i class="tl t3" style="--x:-40%;--y:-190%;--r:-9deg;--l:4deg;--d:0.14s"><b class="ph p3"></b></i><i class="tl t4" style="--x:190%;--y:-120%;--r:16deg;--l:-3deg;--d:0.21s"><b class="ph p4"></b></i><i class="tl t5" style="--x:170%;--y:120%;--r:-12deg;--l:4deg;--d:0.28s"><b class="ph p2"></b></i><i class="tl t6" style="--x:70%;--y:-190%;--r:11deg;--l:-5deg;--d:0.35s"><b class="ph p1"></b></i><i class="tl t7" style="--x:-60%;--y:200%;--r:-15deg;--l:-3deg;--d:0.42s"><b class="ph p4"></b></i><i class="tl t8" style="--x:90%;--y:190%;--r:9deg;--l:5deg;--d:0.49s"><b class="ph p3"></b></i><div class="c"><div class="hd">Moments,<br><span class="ac">composed.</span></div><div class="cta"></div></div></div></div>
+</div></div>
+</body>
+</html>

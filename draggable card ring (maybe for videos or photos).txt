@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draggable card ring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Draggable card ring */
+.d{background:#fff;touch-action:pan-y}
+.d .bg{position:absolute;inset:0;background:radial-gradient(70% 60% at 55% 42%,#e3efff 0%,#f6f9ff 55%,#fff 100%)}
+.d .gl{position:absolute;inset:0}
+.d .gl canvas{display:block;width:100%;height:100%}
+.d .copy{position:absolute;left:7%;bottom:9%;pointer-events:none}
+.d .k{font:600 9px/1 var(--ml-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ml-accent)}
+.d h3{margin-top:6px;font:600 22px/1 var(--ml-font);letter-spacing:-.04em;color:var(--ml-ink)}
+.d .hint{position:absolute;left:50%;bottom:9px;transform:translateX(-50%);padding:4px 9px;border-radius:999px;border:1px solid var(--ml-line);background:rgba(255,255,255,.78);font:600 8px/1 var(--ml-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ml-muted);pointer-events:none;white-space:nowrap}
+.d .gh{position:absolute;left:0;top:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;border:1.5px solid var(--ml-accent);background:rgba(10,108,255,.14);pointer-events:none;opacity:0;transition:opacity .35s,scale .15s}
+.d .gh.on{opacity:1}
+.d .gh.dn{scale:.65}
+
+.d{cursor:grab}
+.d .cap{position:absolute;left:0;right:0;bottom:30px;display:flex;flex-direction:column;align-items:center;gap:3px;pointer-events:none}
+.d .cap b{font:600 13px/1 var(--ml-font);letter-spacing:-.02em;color:var(--ml-ink)}
+.d .cap span{font:600 8px/1 var(--ml-mono);letter-spacing:.08em;color:var(--ml-muted)}
+.d .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:5px;pointer-events:none}
+.d .dots i{width:5px;height:5px;border-radius:3px;background:var(--ml-bar-2);transition:width var(--ml-spring-dur) var(--ml-spring),background .2s}
+.d .dots i.on{width:16px;background:var(--ml-accent)}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<div class="bg"></div><div class="gl"></div><div class="cap"><b>Studio</b><span>01 / 08</span></div><div class="dots"></div>
+</div></div>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.min.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+const lib = { THREE, RoomEnvironment, RoundedBoxGeometry, pixelRatio: Math.min(window.devicePixelRatio, 2) };
+((root, lib) => {
+      const { THREE, RoomEnvironment, RoundedBoxGeometry } = lib;
+      const host = root.querySelector('.gl');
+      const capB = root.querySelector('.cap b');
+      const capS = root.querySelector('.cap span');
+      const dotsEl = root.querySelector('.dots');
+      const own = [];
+      const track = (o) => (own.push(o), o);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setPixelRatio(lib.pixelRatio);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      host.appendChild(renderer.domElement);
+      const scene = new THREE.Scene();
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
+      scene.environment = envRT.texture;
+      const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+      camera.position.set(0, 1.5, 11.9);
+      camera.lookAt(0, -0.45, 0);
+
+      const N = 8;
+      const STEP = (Math.PI * 2) / N;
+      const RING = 3.3;
+      const names = ['Studio', 'Atlas', 'Orbit', 'Prism', 'Nova', 'Halo', 'Pulse', 'Drift'];
+      const pal = [
+        ['#9cc8ff', '#2f6bff', 1],
+        ['#bcd7ff', '#5b97ff', 1],
+        ['#4f8dff', '#0a52d6', 1],
+        ['#8fbaff', '#2f6bff', 1],
+        ['#7fb4ff', '#1f62f5', 1],
+        ['#a9cbff', '#4f8dff', 1],
+        ['#3d86ff', '#0b3fb4', 1],
+        ['#c9deff', '#4a86f5', 1],
+      ];
+      const CWd = 256;
+      const CHt = 352;
+      const frontTex = [];
+      const paintCard = (i) => {
+        const [a, b, dark] = pal[i];
+        const cv = frontTex[i].image;
+        const g = cv.getContext('2d');
+        const bg = g.createLinearGradient(0, 0, CWd, CHt);
+        bg.addColorStop(0, a);
+        bg.addColorStop(1, b);
+        g.fillStyle = bg;
+        g.fillRect(0, 0, CWd, CHt);
+        g.fillStyle = dark ? 'rgba(255,255,255,.22)' : 'rgba(255,255,255,.55)';
+        const k = i % 4;
+        if (k === 0) {
+          g.beginPath();
+          g.arc(170, 120, 78, 0, Math.PI * 2);
+          g.fill();
+        } else if (k === 1) {
+          for (let r = 0; r < 3; r++) {
+            g.beginPath();
+            g.roundRect(40, 60 + r * 46, 176 - r * 40, 26, 13);
+            g.fill();
+          }
+        } else if (k === 2) {
+          g.lineWidth = 22;
+          g.strokeStyle = g.fillStyle;
+          g.beginPath();
+          g.arc(128, 130, 70, Math.PI * 0.15, Math.PI * 1.55);
+          g.stroke();
+        } else {
+          for (let r = 0; r < 4; r++)
+            for (let c = 0; c < 4; c++) {
+              g.beginPath();
+              g.arc(54 + c * 50, 62 + r * 50, 11, 0, Math.PI * 2);
+              g.fill();
+            }
+        }
+        g.fillStyle = dark ? '#ffffff' : '#0b1b3a';
+        g.textAlign = 'left';
+        g.font = '600 44px Geist, system-ui, sans-serif';
+        g.fillText(names[i], 26, 298);
+        g.font = '600 14px "Geist Mono", ui-monospace, monospace';
+        g.fillStyle = dark ? 'rgba(255,255,255,.8)' : 'rgba(11,27,58,.6)';
+        g.fillText('COLLECTION 0' + (i + 1), 28, 324);
+        frontTex[i].needsUpdate = true;
+      };
+      const geo = track(new RoundedBoxGeometry(1.55, 2.14, 0.07, 3, 0.11));
+      const sideMat = track(new THREE.MeshPhysicalMaterial({ color: 0x8fbaff, roughness: 0.3, clearcoat: 0.6 }));
+      const backMat = track(new THREE.MeshPhysicalMaterial({ color: 0xb9d4ff, roughness: 0.35, clearcoat: 0.6 }));
+      const cards = [];
+      for (let i = 0; i < N; i++) {
+        const cv = document.createElement('canvas');
+        cv.width = CWd;
+        cv.height = CHt;
+        const tex = track(new THREE.CanvasTexture(cv));
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = 4;
+        frontTex.push(tex);
+        paintCard(i);
+        const fm = track(new THREE.MeshPhysicalMaterial({ map: tex, roughness: 0.5, clearcoat: 0.25, clearcoatRoughness: 0.4 }));
+        const mesh = new THREE.Mesh(geo, [sideMat, sideMat, sideMat, sideMat, fm, backMat]);
+        scene.add(mesh);
+        cards.push(mesh);
+        const d = document.createElement('i');
+        dotsEl.appendChild(d);
+      }
+      const dots = [...dotsEl.children];
+      let dead = false;
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => !dead && frontTex.forEach((_, i) => paintCard(i)));
+
+      const sc = document.createElement('canvas');
+      sc.width = sc.height = 128;
+      const scg = sc.getContext('2d');
+      const grad = scg.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grad.addColorStop(0, 'rgba(10,60,140,.26)');
+      grad.addColorStop(1, 'rgba(10,60,140,0)');
+      scg.fillStyle = grad;
+      scg.fillRect(0, 0, 128, 128);
+      const shTex = track(new THREE.CanvasTexture(sc));
+      const shGeo = track(new THREE.PlaneGeometry(8.4, 8.4));
+      const shMat = track(new THREE.MeshBasicMaterial({ map: shTex, transparent: true, depthWrite: false }));
+      const sh = new THREE.Mesh(shGeo, shMat);
+      sh.rotation.x = -Math.PI / 2;
+      sh.position.y = -1.5;
+      scene.add(sh);
+
+      const size = () => {
+        const w = root.clientWidth || 1;
+        const h = root.clientHeight || 1;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      };
+      size();
+      const ro = new ResizeObserver(size);
+      ro.observe(root);
+
+      // drag with pointer capture, then a spring to the nearest card that inherits the release velocity
+      let ang = 0;
+      let av = 0; // rad/s
+      let target = 0;
+      let down = false;
+      let sx = 0;
+      let sy = 0;
+      let lx = 0;
+      let dragPx = 0;
+      let acc = 0;
+      let lastMove = 0;
+      let userUntil = 0;
+      const onDown = (e) => {
+        down = true;
+        sx = lx = e.clientX;
+        sy = e.clientY;
+        dragPx = acc = 0;
+        av = 0;
+        lastMove = performance.now();
+        try {
+          root.setPointerCapture(e.pointerId);
+        } catch (_) {}
+        root.style.cursor = 'grabbing';
+        userUntil = performance.now() + 2500;
+      };
+      const onMove = (e) => {
+        if (!down) return;
+        acc += e.clientX - lx;
+        lx = e.clientX;
+        dragPx = Math.max(dragPx, Math.hypot(e.clientX - sx, e.clientY - sy));
+        lastMove = performance.now();
+        userUntil = lastMove + 2500;
+      };
+      const onUp = (e) => {
+        if (!down) return;
+        down = false;
+        try {
+          root.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+        root.style.cursor = 'grab';
+        const now = performance.now();
+        userUntil = now + 2500;
+        if (now - lastMove > 90) av = 0;
+        target = Math.round((ang + av * 0.3) / STEP) * STEP;
+      };
+      const onClickCap = (e) => dragPx > 5 && e.stopPropagation();
+      root.addEventListener('pointerdown', onDown);
+      root.addEventListener('pointermove', onMove);
+      root.addEventListener('pointerup', onUp);
+      root.addEventListener('pointercancel', onUp);
+      root.addEventListener('click', onClickCap, true);
+
+      const t0 = performance.now();
+      let last = t0;
+      let nextAuto = t0 + 1600;
+      let active = -1;
+      let raf = 0;
+      const K = 55;
+      const C = 2 * Math.sqrt(K) * 0.92;
+      const loop = (t) => {
+        raf = requestAnimationFrame(loop);
+        if (root.dataset.paused) return;
+        const dt = Math.min(0.033, (t - last) / 1000);
+        last = t;
+        if (down) {
+          const da = acc * 0.0072;
+          acc = 0;
+          ang += da;
+          if (dt > 0) av += (da / dt - av) * 0.35;
+          if (t - lastMove > 90) av *= 0.6;
+        } else {
+          if (t > userUntil && t > nextAuto) {
+            target = Math.round(ang / STEP) * STEP + STEP;
+            nextAuto = t + 2200;
+          }
+          av += (K * (target - ang) - C * av) * dt;
+          ang += av * dt;
+        }
+        if (down || t <= userUntil) nextAuto = Math.max(nextAuto, t + 1000);
+        let idx = 0;
+        let best = -2;
+        cards.forEach((m, i) => {
+          const a = i * STEP + ang;
+          const cs = Math.cos(a);
+          m.position.set(Math.sin(a) * RING, 0, cs * RING);
+          m.rotation.y = a;
+          m.scale.setScalar(0.88 + 0.16 * Math.pow(Math.max(0, cs), 3));
+          if (cs > best) {
+            best = cs;
+            idx = i;
+          }
+        });
+        if (idx !== active) {
+          active = idx;
+          capB.textContent = names[idx];
+          capS.textContent = '0' + (idx + 1) + ' / 08';
+          dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+        }
+        renderer.render(scene, camera);
+      };
+      raf = requestAnimationFrame(loop);
+
+      return () => {
+        dead = true;
+        cancelAnimationFrame(raf);
+        ro.disconnect();
+        root.removeEventListener('pointerdown', onDown);
+        root.removeEventListener('pointermove', onMove);
+        root.removeEventListener('pointerup', onUp);
+        root.removeEventListener('pointercancel', onUp);
+        root.removeEventListener('click', onClickCap, true);
+        root.style.cursor = '';
+        own.forEach((o) => o.dispose());
+        envRT.dispose();
+        pmrem.dispose();
+        renderer.dispose();
+        renderer.forceContextLoss();
+        renderer.domElement.remove();
+      };
+    })(document.querySelector('.d'), lib);
+</script>
+</body>
+</html>
