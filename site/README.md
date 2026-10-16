@@ -19,7 +19,7 @@ npx serve site
 | | Before footer | Marquee CTA band |
 | | Footer | Link arrow nudge |
 | `about.html` | Header | Photo collage settle |
-| `photos.html` | Galleries | Thumbnail strip sync |
+| `photos.html` | Galleries | Thumbnail strip sync: Kobelco, Mori & Mill, On set, Blue Post, Mom’s Champorado, Nik Makino, Crazy Curry |
 | `videos.html` | Reels | Draggable card ring (CSS 3D port), video modal with dot-bounce loader |
 | `events.html` | Header | Polaroid scatter |
 | `book.html` | Booking | Week calendar (click a free half hour to hold it), brief form, review step, success confirmation with Add to calendar, what-happens-next flow |
@@ -44,6 +44,10 @@ Text, surfaces and buttons are black and white; photos, videos and logos are ful
 ## Videos
 
 Showcase clips live in `assets/video/` as 720p H.264 mp4 files with a matching `.webp` poster, listed in `js/showcase.js` (`VIDEOS`). Cards play muted on hover and open the modal with sound on click; the Videos page renders one section per client from that list, and the home reels row picks five ids. To add a clip: transcode it (720x1280 for reels, 1280x720 for landscape, CRF 27, faststart), export a poster frame, drop both files in `assets/video/`, add a line to `VIDEOS`, and add a sidebar link plus a `<section>` with `data-showcase="client"` on `videos.html` if it is a new client. The 1080p masters in the MediSpa, Moms, Swaadish and Crazy Curry folders are not served.
+
+## Photos
+
+Gallery photos live in `assets/photos/` as WebP (max 1800 px, quality 82), named `<client>-NN.webp`. Each gallery on `photos.html` is a `<section id="client">` with a `.gallery-head`, a main viewer (one `.sl` per photo, add `portrait` for tall frames) and a thumbnail strip with `--cols` set to the photo count, plus a sidebar link. The jpg masters in the blue post, mom's champorado, nik makino and Crazy Curry folders are not served.
 
 ## Assets
 

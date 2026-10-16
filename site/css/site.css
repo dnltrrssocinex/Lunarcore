@@ -399,13 +399,13 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .gallery .sl img{width:100%;height:100%;object-fit:cover}
 .gallery .cap{position:absolute;left:16px;bottom:16px;display:flex;gap:8px;align-items:center}
 .gallery .cap span{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.92);font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
-.gallery .st{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.gallery .st{position:relative;display:grid;grid-template-columns:repeat(var(--cols,5),1fr);gap:8px}
 .gallery .tb{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;opacity:.55;transition:opacity .3s ease}
 .gallery .tb img{width:100%;height:100%;object-fit:cover}
 .gallery .tb.on{opacity:1}
 .gallery .ind{position:absolute;left:-3px;top:-3px;bottom:-3px;width:calc((100% - 32px) / 5 + 6px);border-radius:15px;border:2px solid var(--ink);pointer-events:none;transform:translateX(calc(var(--n,0) * (100% + 8px * 5 / 5 * 1)));transition:transform .6s var(--spring)}
 .gallery .st{--gap:8px}
-.gallery .ind{width:calc((100% - 4 * var(--gap)) / 5 + 6px);transform:translateX(calc(var(--n,0) * ((100% - 6px) + var(--gap))))}
+.gallery .ind{width:calc((100% - (var(--cols,5) - 1) * var(--gap)) / var(--cols,5) + 6px);transform:translateX(calc(var(--n,0) * ((100% - 6px) + var(--gap))))}
 .gallery-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}
 .gallery-head h2{font-size:clamp(28px,3.6vw,48px)}
 .gallery-head .meta{font-size:14px;color:var(--muted);text-align:right}
@@ -576,6 +576,12 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .book > *{min-width:0}
 @media (max-width:900px){.book{grid-template-columns:1fr}}
 @media (max-width:560px){.form .two{grid-template-columns:1fr}}
+
+/* ---------- Gallery: portrait frames and long strips ---------- */
+.gallery .sl.portrait{background:#0A0A0A}
+.gallery .sl.portrait img{object-fit:contain}
+.gallery .st.many .tb{aspect-ratio:1}
+@media (max-width:720px){.gallery .st.many{grid-template-columns:repeat(6,1fr)}.gallery .st.many .ind{display:none}.gallery .st.many .tb.on{box-shadow:inset 0 0 0 2px var(--ink)}}
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){

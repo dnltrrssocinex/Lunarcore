@@ -60,6 +60,11 @@
     /* anything already in the first viewport shows at once; the observer handles the rest */
     rv.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight * 0.95 && r.bottom > 0) el.classList.add('in'); else io.observe(el); });
     setTimeout(() => rv.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add('in'); }), 1500);
+    /* belt and braces: reveal on scroll too, for browsers that throttle observers */
+    let tick = 0;
+    const sweep = () => { tick = 0; rv.forEach((el) => { if (el.classList.contains('in')) return; const r = el.getBoundingClientRect(); if (r.top < innerHeight * 0.98 && r.bottom > 0) el.classList.add('in'); }); };
+    addEventListener('scroll', () => { if (!tick) tick = requestAnimationFrame(sweep); }, { passive: true });
+    addEventListener('resize', sweep);
   }
 
   /* ---------- Cursor label (zones: .cz, labels: [data-cursor]) ---------- */
