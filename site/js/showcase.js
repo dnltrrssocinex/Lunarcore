@@ -25,8 +25,21 @@
     ['medispa-ultherapy-1', 'medispa', 'Ultherapy procedure demo, take 1', 'film', 'v', 61],
     ['medispa-ultherapy-2', 'medispa', 'Ultherapy procedure demo, take 2', 'film', 'v', 59],
     ['medispa-emface', 'medispa', 'Emface procedure demo', 'film', 'v', 75],
+    ['banwa-pause', 'banwa', 'When was the last time you paused?', 'reel', 'v', 26],
+    ['banwa-signature-massage', 'banwa', 'Signature massage', 'reel', 'v', 26],
+    ['banwa-lymphatic', 'banwa', 'Lymphatic massage', 'reel', 'v', 26],
+    ['banwa-loyalty-card', 'banwa', 'Loyalty card', 'reel', 'v', 23],
+    ['kendi-beauty-session', 'kendi', 'Your next beauty session', 'reel', 'v', 21],
+    ['kendi-skin-time', 'kendi', 'Your skin deserves time', 'reel', 'v', 25],
+    ['kendi-blackdoll', 'kendi', 'Blackdoll', 'reel', 'v', 23],
+    ['morimill-reel-07', 'morimill', 'Mori & Mill, reel 07', 'reel', 'v', 16],
+    ['morimill-reel-33', 'morimill', 'Mori & Mill, reel 33', 'reel', 'v', 16],
+    ['morimill-reel-35', 'morimill', 'Mori & Mill, reel 35', 'reel', 'v', 19],
+    ['morimill-reel-36', 'morimill', 'Mori & Mill, reel 36', 'reel', 'v', 19],
+    ['bluepost-reel-1', 'bluepost', 'Blue Post, reel 01', 'reel', 'v', 8],
+    ['bluepost-reel-2', 'bluepost', 'Blue Post, reel 02', 'reel', 'v', 11],
   ].map(([id, client, title, kind, orient, dur]) => ({ id, client, title, kind, orient, dur, src: V + id + '.mp4', poster: V + id + '.webp' }));
-  const CLIENTS = { swaadisht: 'Swaadisht', crazycurry: 'Crazy Curry', moms: 'Moms', medispa: 'MediSpa' };
+  const CLIENTS = { swaadisht: 'Swaadisht', crazycurry: 'Crazy Curry', moms: 'Moms', medispa: 'MediSpa', banwa: 'Banwa Wellness Spa', kendi: 'Kendi', morimill: 'Mori & Mill', bluepost: 'Blue Post' };
   const byId = Object.fromEntries(VIDEOS.map((v) => [v.id, v]));
   const mmss = (s) => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

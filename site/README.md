@@ -43,7 +43,7 @@ Text, surfaces and buttons are black and white; photos, videos and logos are ful
 
 ## Videos
 
-Showcase clips live in `assets/video/` as 720p H.264 mp4 files with a matching `.webp` poster, listed in `js/showcase.js` (`VIDEOS`). Cards play muted on hover and open the modal with sound on click; the Videos page renders one section per client from that list, and the home reels row picks five ids. To add a clip: transcode it (720x1280 for reels, 1280x720 for landscape, CRF 27, faststart), export a poster frame, drop both files in `assets/video/`, add a line to `VIDEOS`, and add a sidebar link plus a `<section>` with `data-showcase="client"` on `videos.html` if it is a new client. The 1080p masters in the MediSpa, Moms, Swaadish and Crazy Curry folders are not served.
+Showcase clips live in `assets/video/` as 720p H.264 mp4 files with a matching `.webp` poster, listed in `js/showcase.js` (`VIDEOS`). Cards play muted on hover and open the modal with sound on click; the Videos page renders one section per client from that list, and the home reels row picks five ids. To add a clip: transcode it (720x1280 for reels, 1280x720 for landscape, CRF 27, faststart), export a poster frame, drop both files in `assets/video/`, add a line to `VIDEOS`, and add a sidebar link plus a `<section>` with `data-showcase="client"` on `videos.html` if it is a new client. Clients so far: Swaadisht, Crazy Curry, Moms, MediSpa, Banwa Wellness Spa, Kendi, Mori & Mill, Blue Post. The 1080p and 4K masters in the client folders are git-ignored and not served.
 
 ## Photos
 

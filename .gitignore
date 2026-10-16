@@ -1,16 +1,16 @@
-node_modules/
-Thumbs.db
-.DS_Store
-*.log
 
 # 1080p video masters (served copies live in site/assets/video)
+*.log
+.DS_Store
+/Crazy Curry/
 /MediSpa/
 /Moms/
+/Mori  mill reels/
 /Swaadish/
-/Crazy Curry/
+/banwa/
 /blue post/
+/kendi/
 /mom's ube & choloate champorado/
 /nik makino Music video/
-/banwa/
-/kendi/
-/Mori  mill reels/
+Thumbs.db
+node_modules/
