@@ -2,3 +2,9 @@ node_modules/
 Thumbs.db
 .DS_Store
 *.log
+
+# 1080p video masters (served copies live in site/assets/video)
+/MediSpa/
+/Moms/
+/Swaadish/
+/Crazy Curry/

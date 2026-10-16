@@ -33,13 +33,17 @@ npx serve site
 - **Studio email**: `js/config.js` → `email` (currently `hello@lunarcorestudios.com`, a placeholder) and the email card in `book.html`.
 - **What happens next**: the four steps shown after a submission are in `js/config.js` → `next`.
 - **Instagram URL**: links point to `instagram.com/lunarcorestudios`; change if the handle differs.
-- **Video links**: every reel / long-form card has `data-video=""`. Put an `.mp4` URL or an embed URL (YouTube / Vimeo / Facebook) there and the modal plays it. Empty cards show a "find it on our feed" note.
+- **Long-form stills** (garage ad, Nik Makino) and the from-this-to-this cards still have `data-video=""`. Put an `.mp4` URL or an embed URL there and the modal plays it.
 - **Reserved slots** in the calendar are placeholders generated per week. Wire `reserved()` in `js/book.js` to a real calendar when ready.
 - **Testimonial text**: transcribed from the draft screenshots, worth a proof-read.
 
 ## Colour
 
 Text, surfaces and buttons are black and white; photos, videos and logos are full colour (`--photo-sat: 1` in `css/site.css`, set to `0` for greyscale). The conic sweep background is tinted from `--sweep-1` (#D4EAFD). The brand accent tokens (`--accent`, `--grad`, etc.) are black for now and can take the brand blue later in the same place.
+
+## Videos
+
+Showcase clips live in `assets/video/` as 720p H.264 mp4 files with a matching `.webp` poster, listed in `js/showcase.js` (`VIDEOS`). Cards play muted on hover and open the modal with sound on click; the Videos page renders one section per client from that list, and the home reels row picks five ids. To add a clip: transcode it (720x1280 for reels, 1280x720 for landscape, CRF 27, faststart), export a poster frame, drop both files in `assets/video/`, add a line to `VIDEOS`, and add a sidebar link plus a `<section>` with `data-showcase="client"` on `videos.html` if it is a new client. The 1080p masters in the MediSpa, Moms, Swaadish and Crazy Curry folders are not served.
 
 ## Assets
 

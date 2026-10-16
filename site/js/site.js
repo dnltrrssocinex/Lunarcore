@@ -40,6 +40,7 @@
     if (!a) return;
     const href = a.getAttribute('href');
     if (!href || href.startsWith('#') || a.target === '_blank' || /^(https?:|mailto:|tel:)/i.test(href)) return;
+    if (a.hasAttribute('data-video') || a.hasAttribute('download') || /\.(mp4|webm|mov|pdf|ics|zip)(\?|$)/i.test(href)) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     const page = $('.page');
     const [path, hash] = href.split('#');
@@ -355,7 +356,8 @@
     const box = $('.box', modal), ld = $('.ld', modal), x = $('.x', modal);
     let media = null;
     const close = () => { modal.classList.remove('on'); setTimeout(() => { if (media) media.remove(); media = null; const em = $('.empty', modal); if (em) em.remove(); }, 350); };
-    const open = (src, title) => {
+    const open = (src, title, orient) => {
+      modal.classList.toggle('vert', orient === 'v');
       modal.classList.add('on');
       ld.classList.remove('off');
       if (!src) {
@@ -380,7 +382,7 @@
     };
     document.addEventListener('click', (e) => {
       const v = e.target.closest('[data-video]');
-      if (v) { e.preventDefault(); if (v.dataset.dragged === '1') return; open(v.dataset.video, v.dataset.name); }
+      if (v) { e.preventDefault(); if (v.dataset.dragged === '1') return; open(v.dataset.video, v.dataset.name, v.dataset.orient); }
     });
     x.addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
