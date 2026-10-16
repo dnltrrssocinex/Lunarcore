@@ -33,9 +33,9 @@ npx serve site
 - **Reserved slots** in the calendar are placeholders generated per week. Wire `reserved()` in `js/book.js` to a real calendar when ready.
 - **Testimonial text**: transcribed from the draft screenshots, worth a proof-read.
 
-## Switching colour back on
+## Colour
 
-Photos are shown in greyscale and go to colour on hover. To show them in colour everywhere, set `--photo-sat: 1` in `css/site.css` (`:root`). The brand accent tokens (`--accent`, `--grad`, etc.) are black for now and can take the brand blue later in the same place.
+Text, surfaces and buttons are black and white; photos, videos and logos are full colour (`--photo-sat: 1` in `css/site.css`, set to `0` for greyscale). The conic sweep background is tinted from `--sweep-1` (#D4EAFD). The brand accent tokens (`--accent`, `--grad`, etc.) are black for now and can take the brand blue later in the same place.
 
 ## Assets
 

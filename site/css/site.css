@@ -27,7 +27,10 @@
   --bounce-dur:594ms;
   --font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",system-ui,sans-serif;
   --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --photo-sat:0;          /* 0 = black & white photos, 1 = full colour */
+  --photo-sat:1;          /* 1 = full colour photos, 0 = black & white */
+  --sweep-1:#D4EAFD;      /* conic sweep tint */
+  --sweep-2:#B9DCFB;
+  --sweep-3:#EAF4FE;
   --container:1200px;
   --gutter:clamp(20px,4vw,48px);
   --nav-h:64px;
@@ -67,7 +70,7 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 
 /* ---------- Conic sweep: site background ---------- */
 .sweep{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--bg)}
-.sweep i{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;border-radius:50%;background:conic-gradient(from 0deg,#FFFFFF,#E8E8EC 18%,#C9C9CF 34%,#F2F2F5 52%,#D7D7DC 70%,#FFFFFF 86%,#E8E8EC);filter:blur(40px);opacity:.55;animation:sweep 28s linear infinite;will-change:transform}
+.sweep i{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;border-radius:50%;background:conic-gradient(from 0deg,#FFFFFF,var(--sweep-1) 18%,var(--sweep-2) 34%,var(--sweep-3) 52%,var(--sweep-1) 70%,#FFFFFF 86%,var(--sweep-1));filter:blur(40px);opacity:.85;animation:sweep 28s linear infinite;will-change:transform}
 @keyframes sweep{to{transform:rotate(360deg)}}
 .sweep::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 40%,rgba(255,255,255,.7),rgba(255,255,255,0) 70%)}
 .page{position:relative;z-index:1}
@@ -308,8 +311,7 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .logos .ct{display:grid;place-items:center;width:100%;height:100%;transition:opacity 280ms ease,transform 380ms var(--ease)}
 .logos .ct.out{opacity:0;transform:translateY(-10px) scale(.92)}
 .logos .ct.pre{opacity:0;transform:translateY(10px) scale(.92);transition:none}
-.logos .ct img{width:46%;max-width:110px;aspect-ratio:1;object-fit:cover;border-radius:14px;filter:grayscale(1);transition:filter .5s ease}
-.logos .cl2:hover .ct img{filter:grayscale(calc(1 - var(--photo-sat)))}
+.logos .ct img{width:46%;max-width:110px;aspect-ratio:1;object-fit:cover;border-radius:14px}
 .logos .pool{display:none}
 @media (max-width:640px){.logos{grid-template-columns:repeat(2,1fr)}.logos .cl2:nth-child(n+7){display:none}}
 
