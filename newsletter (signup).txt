@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Newsletter signup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F2F5FA}
+.frame{width:min(92vw,560px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(16,24,40,.06),0 20px 50px rgba(16,24,40,.12)}
+.d{
+  --ml-bg:#FFFFFF;
+  --ml-surface:#F4F7FC;
+  --ml-line:#E3E9F2;
+  --ml-bar:#DCE4F0;
+  --ml-bar-2:#EBF0F7;
+  --ml-ink:#1D1D1F;
+  --ml-ink-2:#424245;
+  --ml-muted:#86868B;
+  --ml-accent:#0A6CFF;
+  --ml-accent-2:#4FA3FF;
+  --ml-accent-ink:#0050C8;
+  --ml-accent-soft:#E7F0FF;
+  --ml-accent-line:#B9D4FF;
+  --ml-grad:linear-gradient(135deg,#0A6CFF 0%,#4FA3FF 100%);
+  --ml-shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+  --ml-shadow-lg:0 2px 4px rgba(16,24,40,.06),0 18px 40px rgba(16,24,40,.14);
+  --ml-ease:cubic-bezier(.32,.72,0,1);
+  --ml-spring:linear(0, 0.0941 5.6%, 0.2736 11.1%, 0.4548 16.7%, 0.6076 22.2%, 0.7255 27.8%, 0.8119 33.3%, 0.8732 38.9%, 0.9156 44.4%, 0.9444 50.0%, 0.9636 55.6%, 0.9764 61.1%, 0.9848 66.7%, 0.9902 72.2%, 0.9938 77.8%, 0.9960 83.3%, 0.9975 88.9%, 0.9984 94.4%, 1 100%);
+  --ml-spring-dur:587ms;
+  --ml-bounce:linear(0, 0.0833 5.6%, 0.2603 11.1%, 0.4566 16.7%, 0.6331 22.2%, 0.7737 27.8%, 0.8759 33.3%, 0.9442 38.9%, 0.9858 44.4%, 1.0081 50.0%, 1.0178 55.6%, 1.0199 61.1%, 1.0180 66.7%, 1.0143 72.2%, 1.0104 77.8%, 1.0070 83.3%, 1.0043 88.9%, 1.0023 94.4%, 1 100%);
+  --ml-bounce-dur:594ms;
+  --ml-font:"Geist",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;
+  --ml-mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--ml-bg);color:var(--ml-ink);
+  font:500 12px/1.35 var(--ml-font);
+  -webkit-font-smoothing:antialiased;
+}
+.d *,.d *::before,.d *::after{box-sizing:border-box;margin:0;padding:0}
+.d button,.d input,.d select,.d textarea{font:inherit;color:inherit}
+.d[data-paused],.d[data-paused] *,.d[data-paused] *::before,.d[data-paused] *::after{animation-play-state:paused!important}
+
+/* Newsletter signup */
+.d{display:grid;place-items:center;background:var(--ml-surface)}
+.d{grid-template-columns:minmax(0,1fr)}
+.d .nl{width:88%;justify-self:center;padding:20px 18px;border-radius:16px;background:var(--ml-bg);box-shadow:var(--ml-shadow)}
+.d h5{font:600 18px/1.1 var(--ml-font);letter-spacing:-.035em}
+.d p{margin:5px 0 14px;font-size:11.5px;color:var(--ml-muted)}
+.d .row{position:relative;display:flex;align-items:center;gap:6px;height:42px;padding:4px 4px 4px 14px;border-radius:999px;background:var(--ml-surface);box-shadow:inset 0 0 0 1px var(--ml-line);transition:box-shadow .25s ease}
+.d .row:focus-within{box-shadow:inset 0 0 0 1.5px var(--ml-accent)}
+.d .em{flex:1;min-width:0;border:0;outline:0;background:none;font-size:12px;color:var(--ml-ink)}
+.d .em::placeholder{color:var(--ml-muted)}
+.d .sb{flex:none;height:100%;padding:0 14px;border-radius:999px;background:var(--ml-accent);color:#fff;font-weight:600;font-size:11.5px;transition:transform var(--ml-spring-dur) var(--ml-spring)}
+.d .sb:active,.d .sb.press{transform:scale(.94);transition-duration:90ms}
+.d .ok{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;background:var(--ml-grad);color:#fff;font-weight:600;font-size:12.5px;clip-path:circle(0% at 88% 50%);pointer-events:none;transition:clip-path 640ms var(--ml-ease)}
+.d .ok svg{width:15px;height:15px;stroke-dasharray:24;stroke-dashoffset:24}
+.d .row.done .ok{clip-path:circle(150% at 88% 50%);pointer-events:auto}
+.d .row.done .ok svg{stroke-dashoffset:0;transition:stroke-dashoffset 420ms ease .32s}
+</style>
+</head>
+<body>
+<div class="frame"><div class="d">
+<form class="nl" novalidate><h5>Stay in the loop</h5><p>One short email a month. No spam.</p>
+<div class="row"><input class="em" type="email" placeholder="you@studio.co" aria-label="Email address" autocomplete="off"><button class="sb" type="submit">Subscribe</button>
+<div class="ok" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>You're in</span></div></div></form>
+</div></div>
+<script>
+((root) => {
+    const form = root.querySelector('.nl');
+    const row = root.querySelector('.row');
+    const em = root.querySelector('.em');
+    const sb = root.querySelector('.sb');
+    let uu = 0;
+    const user = () => { uu = performance.now() + 5000; };
+    em.addEventListener('focus', user);
+    em.addEventListener('input', user);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      user();
+      if (em.value.trim().length < 3) return;
+      row.classList.add('done');
+      setTimeout(() => { row.classList.remove('done'); em.value = ''; }, 2600);
+    });
+    const text = 'maya@studio.co';
+    let i = 0;
+    let phase = 0;
+    const tick = () => {
+      if (!root.isConnected) return;
+      let d = 90;
+      if (root.dataset.paused || performance.now() < uu || row.classList.contains('done') && phase === 0) {
+        setTimeout(tick, 400);
+        return;
+      }
+      if (phase === 0) {
+        i += 1;
+        em.value = text.slice(0, i);
+        if (i >= text.length) { phase = 1; d = 600; }
+      } else if (phase === 1) {
+        sb.classList.add('press');
+        phase = 2;
+        d = 160;
+      } else if (phase === 2) {
+        sb.classList.remove('press');
+        row.classList.add('done');
+        phase = 3;
+        d = 2300;
+      } else {
+        row.classList.remove('done');
+        d = 700;
+        phase = 4;
+      }
+      if (phase === 4) { em.value = ''; i = 0; phase = 0; d = 900; }
+      setTimeout(tick, d);
+    };
+    setTimeout(tick, 900);
+  })(document.querySelector('.d'));
+</script>
+</body>
+</html>

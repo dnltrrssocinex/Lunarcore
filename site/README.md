@@ -22,12 +22,16 @@ npx serve site
 | `photos.html` | Galleries | Thumbnail strip sync |
 | `videos.html` | Reels | Draggable card ring (CSS 3D port), video modal with dot-bounce loader |
 | `events.html` | Header | Polaroid scatter |
-| `book.html` | Booking | Week calendar (click a free half hour to hold it) + brief form |
+| `book.html` | Booking | Week calendar (click a free half hour to hold it), brief form, review step, success confirmation with Add to calendar, what-happens-next flow |
+| `start.html` | Start a project | Role and goal pickers (3-step survey) posted to the GoHighLevel webhook, success confirmation + what-happens-next |
+| `photos.html`, `videos.html`, `events.html` | Collections | Off-canvas sidebar with edge peek (hide it, hover the left edge to peek, floating button to bring it back); add new projects as sections + sidebar links |
 | all pages | Background / navigation | Conic sweep, fade-through page transitions, dot-bounce loader on first load |
 
 ## Things to fill in
 
-- **Studio email**: `book.html` → `data-email` on the form and the email card (currently `hello@lunarcorestudios.com`, a placeholder).
+- **Webhook**: `js/config.js` → `webhook`. Paste the GoHighLevel inbound webhook URL. Survey answers and booking requests are POSTed there as JSON (`kind` is `survey` or `booking`, plus name, email, phone, company, role, goals[], timing, type, hours, slot, slotLabel, notes, reference, page, submittedAt). While it is empty, the success card offers a Send by email fallback.
+- **Studio email**: `js/config.js` → `email` (currently `hello@lunarcorestudios.com`, a placeholder) and the email card in `book.html`.
+- **What happens next**: the four steps shown after a submission are in `js/config.js` → `next`.
 - **Instagram URL**: links point to `instagram.com/lunarcorestudios`; change if the handle differs.
 - **Video links**: every reel / long-form card has `data-video=""`. Put an `.mp4` URL or an embed URL (YouTube / Vimeo / Facebook) there and the modal plays it. Empty cards show a "find it on our feed" note.
 - **Reserved slots** in the calendar are placeholders generated per week. Wire `reserved()` in `js/book.js` to a real calendar when ready.

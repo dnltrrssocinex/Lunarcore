@@ -130,15 +130,49 @@
     }
   };
 
-  if (form) {
-    form.addEventListener('submit', (e) => {
+  /* Send the brief: review, confirm, post to the webhook, then the success card */
+  const flow = document.querySelector('.flow');
+  if (form && flow && window.LC) {
+    const fields = ['name', 'email', 'company', 'notes'].reduce((o, k) => (o[k] = form.querySelector('[name="' + k + '"]'), o), {});
+    const okEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    form.addEventListener('input', (e) => { const f = e.target.closest('.field'); if (f) f.classList.remove('bad'); });
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const f = new FormData(form);
-      const to = form.dataset.email || '';
-      const subject = 'Booking request: ' + f.get('type') + (f.get('slot') ? ' on ' + f.get('slot') : '');
-      const body = ['Name: ' + f.get('name'), 'Email: ' + f.get('email'), 'Company / event: ' + f.get('company'), 'Shoot type: ' + f.get('type'), 'Preferred slot: ' + (f.get('slot') || 'flexible'), '', f.get('notes')].join('\n');
-      location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      say('Opening your mail app');
+      let bad = false;
+      if (fields.name.value.trim().length < 2) { fields.name.closest('.field').classList.add('bad'); bad = true; }
+      if (!okEmail(fields.email.value.trim())) { fields.email.closest('.field').classList.add('bad'); bad = true; }
+      if (bad) { say('Add your name and a valid email'); return; }
+      const p = {
+        kind: 'booking',
+        name: fields.name.value.trim(),
+        email: fields.email.value.trim(),
+        company: fields.company.value.trim(),
+        notes: fields.notes.value.trim(),
+        type: types[pick][0],
+        hours: types[pick][2],
+        slot: held ? held.d.toISOString().slice(0, 10) + 'T' + hm(held.h) + ':00' : '',
+        slotLabel: held ? held.d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ', ' + t12(held.h) : 'Flexible',
+        reference: LC.ref(),
+      };
+      const when = held ? p.slotLabel + ' (' + span(held.h, p.hours) + ')' : 'Flexible, we will suggest dates';
+      const rows = [['Shoot', p.type], ['When', when], ['Crew time', p.hours + ' hours'], ['For', p.company || p.name], ['Reply to', p.email], ['Reference', p.reference, true]];
+      const intro = document.querySelector('.brief-intro');
+      form.hidden = true;
+      if (intro) intro.hidden = true;
+      const ok = await LC.review(flow, { title: 'Confirm your request', text: 'Holding a slot is free. We confirm by email within the day and nothing is charged until you approve the quote.', rows, confirmLabel: 'Confirm request' });
+      if (!ok) { flow.hidden = true; flow.innerHTML = ''; form.hidden = false; if (intro) intro.hidden = false; form.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+      const res = await LC.submitLead(p);
+      const fallback = res.fallback ? LC.mailto('Booking request: ' + p.type + (held ? ' on ' + p.slotLabel : '') + ' (' + p.reference + ')', ['Name: ' + p.name, 'Email: ' + p.email, 'Company / event: ' + p.company, 'Shoot type: ' + p.type, 'Preferred slot: ' + when, '', p.notes]) : null;
+      const start = held ? new Date(held.d.getFullYear(), held.d.getMonth(), held.d.getDate(), Math.floor(held.h), Math.round((held.h % 1) * 60)) : null;
+      LC.success(flow, {
+        title: held ? 'Your slot is held' : 'Request received',
+        text: 'A confirmation is on its way to ' + p.email + '. A producer replies within the day to lock it in.',
+        rows,
+        ics: start ? { title: 'Lunarcore Studios: ' + p.type + ' (requested)', start, hours: p.hours, description: 'Reference ' + p.reference + '. Requested via lunarcore site, awaiting confirmation from the studio.', id: p.reference } : null,
+        fallbackHref: fallback,
+        again: { label: 'Hold another date', href: 'book.html' },
+      });
+      say(res.fallback ? 'Saved. Send it by email to finish' : 'Request sent: ' + p.reference);
     });
   }
   render();
