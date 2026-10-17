@@ -11,7 +11,7 @@ npx serve site
 | File | Section | Motion used |
 | --- | --- | --- |
 | `index.html` | Hero | Depth parallax planes (CSS 3D port) + shine sweep on the headline + magnetic CTA |
-| | How we work | Section colour shift (white → grey → charcoal → black) with a phone that cycles clips |
+| | How we work | Section colour shift (white → grey → charcoal), one YouTube episode per step (Jack & The First Crack, 16X Bootcamp, Tender Loving Cakes), click to watch |
 | | Past projects / From this to this | Cursor label ("Watch") |
 | | Client reviews | Fading quotes |
 | | Clients we worked with | Logo grid cycle |
@@ -19,7 +19,7 @@ npx serve site
 | | Before footer | Marquee CTA band |
 | | Footer | Link arrow nudge |
 | `about.html` | Header | Photo collage settle |
-| `photos.html` | Galleries | Thumbnail strip sync: Kobelco, Mori & Mill, Lunarcore in action, Blue Post, Mom’s Champorado, Nik Makino, Crazy Curry |
+| `photos.html` | Galleries | Thumbnail strip sync: Kobelco, Mori & Mill, Lunarcore in action, Blue Post, Mom’s Champorado, Nik Makino, Crazy Curry, 16X Marketing Bootcamp |
 | `videos.html` | Reels | Draggable card ring (CSS 3D port), video modal with dot-bounce loader |
 | `events.html` | Header | Polaroid scatter |
 | `book.html` | Booking | Week calendar (click a free half hour to hold it), brief form, review step, success confirmation with Add to calendar, what-happens-next flow |

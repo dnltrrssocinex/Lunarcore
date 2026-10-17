@@ -239,6 +239,8 @@
       dots.forEach((d, n) => d.classList.toggle('on', n === i));
       const num = $('.num', how);
       if (num) num.textContent = String(i + 1).padStart(2, '0');
+      const w = $('.watch', how), st = steps[i];
+      if (w && st && st.dataset.video) { w.dataset.video = st.dataset.video; w.dataset.name = st.dataset.name || ''; w.href = st.dataset.href || '#'; const tg = w.querySelector('.tag'); if (tg) tg.textContent = st.dataset.tag || ''; }
     };
     addEventListener('scroll', upd, { passive: true });
     addEventListener('resize', upd);
