@@ -133,7 +133,7 @@
   /* Send the brief: review, confirm, post to the webhook, then the success card */
   const flow = document.querySelector('.flow');
   if (form && flow && window.LC) {
-    const fields = ['name', 'email', 'company', 'notes'].reduce((o, k) => (o[k] = form.querySelector('[name="' + k + '"]'), o), {});
+    const fields = ['name', 'email', 'phone', 'company', 'notes'].reduce((o, k) => (o[k] = form.querySelector('[name="' + k + '"]'), o), {});
     const okEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
     form.addEventListener('input', (e) => { const f = e.target.closest('.field'); if (f) f.classList.remove('bad'); });
     form.addEventListener('submit', async (e) => {
@@ -146,23 +146,25 @@
         kind: 'booking',
         name: fields.name.value.trim(),
         email: fields.email.value.trim(),
+        phone: fields.phone.value.trim(),
         company: fields.company.value.trim(),
         notes: fields.notes.value.trim(),
         type: types[pick][0],
         hours: types[pick][2],
-        slot: held ? held.d.toISOString().slice(0, 10) + 'T' + hm(held.h) + ':00' : '',
+        /* local wall-clock time in Asia/Manila (UTC+8), e.g. 2026-10-19T13:30:00+08:00 */
+        slot: held ? held.d.getFullYear() + '-' + String(held.d.getMonth() + 1).padStart(2, '0') + '-' + String(held.d.getDate()).padStart(2, '0') + 'T' + String(Math.floor(held.h)).padStart(2, '0') + ':' + String(Math.round((held.h % 1) * 60)).padStart(2, '0') + ':00+08:00' : '',
         slotLabel: held ? held.d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ', ' + t12(held.h) : 'Flexible',
         reference: LC.ref(),
       };
       const when = held ? p.slotLabel + ' (' + span(held.h, p.hours) + ')' : 'Flexible, we will suggest dates';
-      const rows = [['Shoot', p.type], ['When', when], ['Crew time', p.hours + ' hours'], ['For', p.company || p.name], ['Reply to', p.email], ['Reference', p.reference, true]];
+      const rows = [['Shoot', p.type], ['When', when], ['Crew time', p.hours + ' hours'], ['For', p.company || p.name], ['Reply to', p.email], ['Phone', p.phone], ['Reference', p.reference, true]];
       const intro = document.querySelector('.brief-intro');
       form.hidden = true;
       if (intro) intro.hidden = true;
       const ok = await LC.review(flow, { title: 'Confirm your request', text: 'Holding a slot is free. We confirm by email within the day and nothing is charged until you approve the quote.', rows, confirmLabel: 'Confirm request' });
       if (!ok) { flow.hidden = true; flow.innerHTML = ''; form.hidden = false; if (intro) intro.hidden = false; form.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
       const res = await LC.submitLead(p);
-      const fallback = res.fallback ? LC.mailto('Booking request: ' + p.type + (held ? ' on ' + p.slotLabel : '') + ' (' + p.reference + ')', ['Name: ' + p.name, 'Email: ' + p.email, 'Company / event: ' + p.company, 'Shoot type: ' + p.type, 'Preferred slot: ' + when, '', p.notes]) : null;
+      const fallback = res.fallback ? LC.mailto('Booking request: ' + p.type + (held ? ' on ' + p.slotLabel : '') + ' (' + p.reference + ')', ['Name: ' + p.name, 'Email: ' + p.email, 'Phone: ' + p.phone, 'Company / event: ' + p.company, 'Shoot type: ' + p.type, 'Preferred slot: ' + when, '', p.notes]) : null;
       const start = held ? new Date(held.d.getFullYear(), held.d.getMonth(), held.d.getDate(), Math.floor(held.h), Math.round((held.h % 1) * 60)) : null;
       LC.success(flow, {
         title: held ? 'Your slot is held' : 'Request received',

@@ -18,7 +18,12 @@
 
   /* ---------- Webhook ---------- */
   const submitLead = async (payload) => {
-    const body = JSON.stringify(Object.assign({ source: 'lunarcore-site', page: location.pathname, submittedAt: new Date().toISOString() }, payload));
+    const body = JSON.stringify(Object.assign({ source: 'lunarcore-site', page: location.pathname, submittedAt: new Date().toISOString() }, payload, {
+      /* flat, GHL-friendly extras */
+      firstName: String(payload.name || '').trim().split(/\s+/)[0] || '',
+      lastName: String(payload.name || '').trim().split(/\s+/).slice(1).join(' '),
+      goalsText: Array.isArray(payload.goals) ? payload.goals.join(', ') : '',
+    }));
     if (!CFG.webhook) {
       console.warn('[Lunarcore] No webhook configured in js/config.js. Falling back to mailto.');
       return { ok: false, fallback: true };
@@ -28,7 +33,13 @@
       return { ok: r.ok || r.type === 'opaque' };
     } catch (_) {
       /* CORS-locked endpoints: fire-and-forget without reading the response */
-      try { await fetch(CFG.webhook, { method: 'POST', mode: 'no-cors', body }); return { ok: true, opaque: true }; } catch (e) { return { ok: false }; }
+      /* CORS-locked endpoint: resend as form fields (a CORS-safe content type every webhook parser reads) */
+      try {
+        const form = new URLSearchParams();
+        Object.entries(JSON.parse(body)).forEach(([k, v]) => form.append(k, Array.isArray(v) ? v.join(', ') : v == null ? '' : String(v)));
+        await fetch(CFG.webhook, { method: 'POST', mode: 'no-cors', body: form });
+        return { ok: true, opaque: true };
+      } catch (e) { return { ok: false }; }
     }
   };
 

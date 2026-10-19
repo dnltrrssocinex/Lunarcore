@@ -29,7 +29,7 @@ npx serve site
 
 ## Things to fill in
 
-- **Webhook**: `js/config.js` → `webhook`. Paste the GoHighLevel inbound webhook URL. Survey answers and booking requests are POSTed there as JSON (`kind` is `survey` or `booking`, plus name, email, phone, company, role, goals[], timing, type, hours, slot, slotLabel, notes, reference, page, submittedAt). While it is empty, the success card offers a Send by email fallback.
+- **Webhook**: `js/config.js` → `webhook`. Paste the GoHighLevel inbound webhook URL. Survey answers and booking requests are POSTed there as JSON (`kind` is `survey` or `booking`, plus name, firstName, lastName, email, phone, company, role, goals[], goalsText, timing, type, hours, slot as `YYYY-MM-DDTHH:MM:00+08:00`, slotLabel, notes, reference, page, submittedAt). If the endpoint blocks cross-site JSON, the same fields are resent form-encoded. While it is empty, the success card offers a Send by email fallback. The GHL workflow prompt is in `GHL-AI-workflow-prompt.md` at the repo root.
 - **Studio email**: `js/config.js` → `email` (currently `hello@lunarcorestudios.com`, a placeholder) and the email card in `book.html`.
 - **What happens next**: the four steps shown after a submission are in `js/config.js` → `next`.
 - **Instagram URL**: links point to `instagram.com/lunarcorestudios`; change if the handle differs.
