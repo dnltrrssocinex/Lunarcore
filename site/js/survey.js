@@ -41,11 +41,21 @@
   let step = 0, role = -1, when = -1, busy = false;
   const picked = new Set();
 
-  const valid = () => {
-    if (step === 0) { const f = $('[name=name]'), e = $('[name=email]'); return f.value.trim().length > 1 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e.value.trim()); }
-    if (step === 1) return role >= 0 && picked.size > 0;
-    return true;
+  /* every field is required: contact details, role, at least one goal, timing and notes */
+  const checks = {
+    name: (v) => v.length > 1,
+    email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v),
+    phone: (v) => v.replace(/\D/g, '').length >= 7,
+    company: (v) => v.length > 1,
+    notes: (v) => v.length > 2,
   };
+  const ok = (k) => checks[k]($('[name=' + k + ']').value.trim());
+  const valid = () => {
+    if (step === 0) return ok('name') && ok('email') && ok('phone') && ok('company');
+    if (step === 1) return role >= 0 && picked.size > 0;
+    return when >= 0 && ok('notes');
+  };
+  const flag = () => $$('.pane.on .field').forEach((f) => { const i = f.querySelector('input,textarea'); if (i && checks[i.name] && !checks[i.name](i.value.trim())) f.classList.add('bad'); });
   const render = () => {
     panes.forEach((p, i) => p.classList.toggle('on', i === step));
     bars.forEach((b, i) => b.classList.toggle('on', i <= step));
@@ -56,12 +66,14 @@
     chipEls.forEach((c, i) => c.setAttribute('aria-pressed', String(i === when)));
     $('.cnt').textContent = picked.size + ' of 3 picked';
     $('.go .lbl').textContent = step === panes.length - 1 ? 'Send' : 'Continue';
-    go.disabled = !valid() || busy;
+    go.disabled = busy;
+    go.classList.toggle('incomplete', !valid());
   };
   roleEls.forEach((b, i) => b.addEventListener('click', () => { role = i; render(); }));
   goalEls.forEach((b, i) => b.addEventListener('click', () => { if (picked.has(i)) picked.delete(i); else if (picked.size < 3) picked.add(i); render(); }));
   chipEls.forEach((c, i) => c.addEventListener('click', () => { when = when === i ? -1 : i; render(); }));
-  $$('input').forEach((el) => el.addEventListener('input', () => { el.closest('.field').classList.remove('bad'); render(); }));
+  $$('input,textarea').forEach((el) => el.addEventListener('input', () => { el.closest('.field').classList.remove('bad'); render(); }));
+  const hint = (msg) => { const h = $('.need'); if (!h) return; h.textContent = msg; h.classList.remove('show'); void h.offsetWidth; h.classList.add('show'); };
   back.addEventListener('click', () => { if (step > 0) { step -= 1; render(); } });
 
   const payload = () => ({
@@ -77,7 +89,13 @@
   });
 
   go.addEventListener('click', async () => {
-    if (busy || !valid()) { if (step === 0) $$('.pane.on .field').forEach((f) => { const i = f.querySelector('input'); if (i.required && !i.checkValidity()) f.classList.add('bad'); }); return; }
+    if (busy) return;
+    if (!valid()) {
+      flag();
+      hint(step === 0 ? 'Fill in your name, email, phone and business to continue.' : step === 1 ? 'Pick what describes you and at least one thing you want done.' : 'Pick a timing and add a short note to send.');
+      return;
+    }
+    hint('');
     if (step < panes.length - 1) { step += 1; render(); $('.cardx').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     busy = true; render();
     go.classList.add('loading');

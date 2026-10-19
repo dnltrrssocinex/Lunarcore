@@ -4,7 +4,7 @@ window.LUNARCORE = {
   /* GoHighLevel inbound webhook URL. Every survey answer and booking request
      is POSTed here as JSON (see js/forms.js for the payload shape).
      Leave empty while testing: requests then fall back to a mailto link. */
-  webhook: '',
+  webhook: 'https://services.leadconnectorhq.com/hooks/8Dt1TvCOFxFZIl6DsomC/webhook-trigger/3Gcr9kjYdhs1jHrj57ge',
 
   /* Studio inbox used for the mailto fallback and the contact card. */
   email: 'hello@lunarcorestudios.com',

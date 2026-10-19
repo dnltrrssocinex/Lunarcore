@@ -133,21 +133,38 @@
   /* Send the brief: review, confirm, post to the webhook, then the success card */
   const flow = document.querySelector('.flow');
   if (form && flow && window.LC) {
-    const fields = ['name', 'email', 'phone', 'company', 'notes'].reduce((o, k) => (o[k] = form.querySelector('[name="' + k + '"]'), o), {});
-    const okEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-    form.addEventListener('input', (e) => { const f = e.target.closest('.field'); if (f) f.classList.remove('bad'); });
+    const fields = ['name', 'email', 'phone', 'company', 'role', 'notes'].reduce((o, k) => (o[k] = form.querySelector('[name="' + k + '"]'), o), {});
+    /* every field is required, plus a held slot on the calendar */
+    const checks = {
+      name: (v) => v.length > 1,
+      email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v),
+      phone: (v) => v.replace(/\D/g, '').length >= 7,
+      company: (v) => v.length > 1,
+      role: (v) => v.length > 0,
+      notes: (v) => v.length > 2,
+    };
+    const clear = (e) => { const f = e.target.closest('.field'); if (f) f.classList.remove('bad'); };
+    form.addEventListener('input', clear);
+    form.addEventListener('change', clear);
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      let bad = false;
-      if (fields.name.value.trim().length < 2) { fields.name.closest('.field').classList.add('bad'); bad = true; }
-      if (!okEmail(fields.email.value.trim())) { fields.email.closest('.field').classList.add('bad'); bad = true; }
-      if (bad) { say('Add your name and a valid email'); return; }
+      const missing = Object.keys(checks).filter((k) => !checks[k](fields[k].value.trim()));
+      missing.forEach((k) => fields[k].closest('.field').classList.add('bad'));
+      if (!held) {
+        const cal = document.querySelector('.cal-head') && document.querySelector('.cal-head').closest('.card');
+        if (cal) { cal.scrollIntoView({ behavior: 'smooth', block: 'center' }); cal.classList.remove('cal-flash'); void cal.offsetWidth; cal.classList.add('cal-flash'); }
+        say(missing.length ? 'Pick a time on the calendar and fill in every field' : 'Pick a time on the calendar first');
+        return;
+      }
+      if (missing.length) { say('Fill in every field to send your request'); fields[missing[0]].focus(); return; }
       const p = {
         kind: 'booking',
         name: fields.name.value.trim(),
         email: fields.email.value.trim(),
         phone: fields.phone.value.trim(),
         company: fields.company.value.trim(),
+        role: fields.role.value,
+        goals: [types[pick][0]],
         notes: fields.notes.value.trim(),
         type: types[pick][0],
         hours: types[pick][2],
@@ -156,8 +173,9 @@
         slotLabel: held ? held.d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ', ' + t12(held.h) : 'Flexible',
         reference: LC.ref(),
       };
+      p.timing = p.slotLabel;
       const when = held ? p.slotLabel + ' (' + span(held.h, p.hours) + ')' : 'Flexible, we will suggest dates';
-      const rows = [['Shoot', p.type], ['When', when], ['Crew time', p.hours + ' hours'], ['For', p.company || p.name], ['Reply to', p.email], ['Phone', p.phone], ['Reference', p.reference, true]];
+      const rows = [['Shoot', p.type], ['When', when], ['Crew time', p.hours + ' hours'], ['For', p.company], ['You are', p.role], ['Reply to', p.email], ['Phone', p.phone], ['Reference', p.reference, true]];
       const intro = document.querySelector('.brief-intro');
       form.hidden = true;
       if (intro) intro.hidden = true;

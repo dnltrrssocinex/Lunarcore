@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css?v=3">
-<link rel="stylesheet" href="css/components.css?v=3">
+<link rel="stylesheet" href="css/components.css?v=5">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230A0A0A'/%3E%3Ccircle cx='20' cy='14' r='8' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -105,17 +105,18 @@
           <input type="hidden" name="type" value="">
           <input type="hidden" name="slot" value="">
           <div class="two">
-            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name"></div>
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></div>
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name"><span class="err">We need a name to reply to.</span></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"><span class="err">That email does not look right.</span></div>
           </div>
           <div class="two">
-            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+63 9xx xxx xxxx"></div>
-            <div class="field"><label for="f-company">Company or event</label><input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Brand, venue or event name"></div>
+            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+63 9xx xxx xxxx"><span class="err">Add a number we can call or text.</span></div>
+            <div class="field"><label for="f-company">Business or brand</label><input id="f-company" name="company" type="text" autocomplete="organization" required placeholder="Brand, venue or event name"><span class="err">Tell us the business or brand.</span></div>
           </div>
-          <div class="field"><label for="f-notes">What do you need?</label><textarea id="f-notes" name="notes" placeholder="Event coverage for a product launch on the 24th, about 200 guests, we need a live feed to the LED wall and a highlight reel after."></textarea></div>
+          <div class="field"><label for="f-role">You are</label><select id="f-role" name="role" required><option value="">Choose what describes you best</option><option>Business owner</option><option>Marketing lead</option><option>Event organiser</option><option>Restaurant or cafe</option><option>Agency</option><option>Creator</option></select><span class="err">Pick the one that fits best.</span></div>
+          <div class="field"><label for="f-notes">What do you need?</label><textarea id="f-notes" name="notes" required placeholder="Event coverage for a product launch on the 24th, about 200 guests, we need a live feed to the LED wall and a highlight reel after."></textarea><span class="err">A line or two is enough.</span></div>
           <div class="act">
             <button class="btn btn-primary btn-lg magnet" type="submit"><span class="lb">Send the brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
-            <p class="hintp">You review it first. Nothing is sent until you confirm.</p>
+            <p class="hintp">Every field is needed, and a time on the calendar. You review it before anything is sent.</p>
           </div>
         </form>
         <div class="flow" hidden aria-live="polite"></div>
@@ -183,9 +184,9 @@
 
 <div class="toast" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span></span></div>
 
-<script src="js/config.js?v=3"></script>
+<script src="js/config.js?v=5"></script>
 <script src="js/site.js?v=3" defer></script>
-<script src="js/forms.js?v=4" defer></script>
-<script src="js/book.js?v=4" defer></script>
+<script src="js/forms.js?v=5" defer></script>
+<script src="js/book.js?v=5" defer></script>
 </body>
 </html>

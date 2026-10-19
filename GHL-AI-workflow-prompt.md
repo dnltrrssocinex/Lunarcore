@@ -6,62 +6,74 @@ Lunarcore Studios is a video, photo and event production studio in the Philippin
 - kind = "booking": someone held a date on our booking calendar for a shoot or event.
 
 TRIGGER
-Inbound Webhook (premium trigger). Use these two sample requests to map fields. Every value is reachable as {{inboundWebhookRequest.<field>}}. Some requests may arrive form-encoded instead of JSON; the field names are identical.
+Inbound Webhook (premium trigger), URL:
+https://services.leadconnectorhq.com/hooks/8Dt1TvCOFxFZIl6DsomC/webhook-trigger/3Gcr9kjYdhs1jHrj57ge
+Both website forms (the "Start a project" page and the booking page) post to this same webhook. Every request carries the same keys, so one mapping covers both. Every value is reachable as {{inboundWebhookRequest.<field>}}. A fully filled sample request was already sent; click "Fetch Sample Request" to load it.
 
-Sample survey request:
+Sample booking request (this is the sample already sent):
+{
+  "source": "lunarcore-site",
+  "page": "/book",
+  "submittedAt": "2026-10-19T04:00:00.000Z",
+  "kind": "booking",
+  "reference": "LC-SAMPLE1",
+  "name": "Sample Lead",
+  "firstName": "Sample",
+  "lastName": "Lead",
+  "email": "sample.lead@example.com",
+  "phone": "+63 917 000 0000",
+  "company": "Sample Brand Co",
+  "role": "Event organiser",
+  "goals": ["Event coverage"],
+  "goalsText": "Event coverage",
+  "timing": "Fri, Oct 23, 1:30 PM",
+  "type": "Event coverage",
+  "hours": 4,
+  "slot": "2026-10-23T13:30:00+08:00",
+  "slotLabel": "Fri, Oct 23, 1:30 PM",
+  "notes": "SAMPLE REQUEST from the Lunarcore website for field mapping. Safe to delete."
+}
+
+Sample survey request (same keys; the calendar fields are empty because no slot is picked on this page):
 {
   "source": "lunarcore-site",
   "page": "/start",
-  "submittedAt": "2026-10-19T01:10:15.742Z",
+  "submittedAt": "2026-10-19T03:59:44.719Z",
   "kind": "survey",
+  "reference": "LC-EQ6ZBJ",
   "name": "Jun Reyes",
   "firstName": "Jun",
   "lastName": "Reyes",
   "email": "jun@example.com",
   "phone": "+63 918 555 0101",
   "company": "Kape Co",
-  "role": "Event organiser",
-  "goals": ["Event coverage", "Live stream"],
-  "goalsText": "Event coverage, Live stream",
-  "timing": "This month",
-  "notes": "Product launch at SM, 300 pax.",
-  "reference": "LC-EK50VY"
+  "role": "Business owner",
+  "goals": ["Reels and video ads", "Product and food photos"],
+  "goalsText": "Reels and video ads, Product and food photos",
+  "timing": "Next month",
+  "type": "",
+  "hours": "",
+  "slot": "",
+  "slotLabel": "",
+  "notes": "New menu launch, need reels and product photos."
 }
 
-Sample booking request:
-{
-  "source": "lunarcore-site",
-  "page": "/book",
-  "submittedAt": "2026-10-19T01:10:10.791Z",
-  "kind": "booking",
-  "name": "Maria Santos Cruz",
-  "firstName": "Maria",
-  "lastName": "Santos Cruz",
-  "email": "maria@example.com",
-  "phone": "+63 917 123 4567",
-  "company": "Brew Lab grand opening",
-  "type": "Brand reels",
-  "hours": 2,
-  "slot": "2026-10-21T13:30:00+08:00",
-  "slotLabel": "Wed, Oct 21, 1:30 PM",
-  "notes": "Opening day, 150 guests, need highlights.",
-  "reference": "LC-EK4WD0"
-}
-
-Possible values:
+Field rules:
+- Required on both forms, so always filled: name, email, phone, company (business or brand), role, goals/goalsText (what they want to get done), timing, notes.
+- Booking only, always filled: type (the shoot they booked), hours, slot (ISO date/time in Asia/Manila) and slotLabel (the readable time slot). For bookings, goals equals the type and timing equals the slotLabel.
+- Survey: type, hours, slot and slotLabel are empty strings.
 - role: Business owner, Marketing lead, Event organiser, Restaurant or cafe, Agency, Creator
-- goals / goalsText: Event coverage, Reels and video ads, Product and food photos, Live stream, Social media management, Graphic design
-- timing: This month, Next month, In 3 months or more, Not sure yet (can be empty)
-- type: Event coverage, Brand reels, Product photos, Live stream
-- slot is empty and slotLabel is "Flexible" when the person did not pick a time.
-- phone, company and notes can be empty. The website does not collect a street address.
+- goals / goalsText (survey): Event coverage, Reels and video ads, Product and food photos, Live stream, Social media management, Graphic design
+- timing (survey): This month, Next month, In 3 months or more, Not sure yet
+- type (booking): Event coverage, Brand reels, Product photos, Live stream
+- The website does not collect a street address.
 
 CUSTOM FIELDS (create these on the Contact first if they don't exist)
 - Lead Type (single line): survey or booking
 - Lead Reference (single line)
 - Role (dropdown, values above)
 - Services Wanted (multi-line text)
-- Timing (dropdown, values above)
+- Timing (single line; survey choice or the booked slot label)
 - Shoot Type (dropdown, values above)
 - Crew Hours (number)
 - Preferred Slot (date/time)
@@ -121,14 +133,14 @@ STEP 5 - TEAM NOTIFICATIONS
 a) Internal notification (in-app and email) to the assigned user.
 b) Email to the team inboxes: hello@lunarcorestudios.com, plus any other producer addresses I add later.
 Subject: New {{kind}} lead: {{full name}} - {{type or goalsText}} ({{reference}})
-Body: every field from the request in a simple list: Name, Email, Phone, Company or event, Lead type, Role, Services wanted, Timing, Shoot type, Crew hours, Preferred slot (slotLabel), Notes, Page, Submitted at (convert to Asia/Manila), Reference, plus a direct link to the contact and to the opportunity in GHL.
+Body: every field from the request in a simple list, booking slot first when kind is booking: Name, Email, Phone, Company or event, Lead type, Role, Services wanted, Timing, Shoot type, Crew hours, Preferred slot (slotLabel), Notes, Page, Submitted at (convert to Asia/Manila), Reference, plus a direct link to the contact and to the opportunity in GHL.
 Start the body with: "Reply within the day. Booking leads with a slot this week come first."
 
 STEP 6 - FOLLOW-UP TASK
 Create a task for the assigned user: "Reply to {{full name}} - {{reference}}", due in 4 business hours (Asia/Manila, Mon to Sat 9:00 to 18:00). For booking leads whose slot is within the next 3 days, mark the task high priority and due in 1 hour.
 
 RULES
-- One run per webhook request; stop the workflow if both email and phone are empty.
+- One run per webhook request. Skip the contact emails and SMS for the sample lead (email sample.lead@example.com).
 - Allow re-entry, so returning leads create new notifications and update the same opportunity.
 - Use Asia/Manila time for every date and time shown to people.
 - When done, list the custom fields, pipeline and stages you created, and every action in order, so I can review before publishing.
