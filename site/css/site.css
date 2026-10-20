@@ -644,3 +644,13 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .legend .l-mine{background:var(--brand-grad)}
 .nowl,.nowl::before,.nowl::after{background:var(--brand)}
 .field input:focus,.field textarea:focus,.field select:focus{box-shadow:inset 0 0 0 1.5px var(--brand),0 0 0 4px var(--accent-soft)}
+
+/* ---------- About: feed, three posts ---------- */
+.feed3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.feed-card{position:relative;display:block;aspect-ratio:1;border-radius:22px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);transition:transform var(--spring-dur) var(--spring),box-shadow .3s ease,opacity .7s ease}
+.feed-card img{width:100%;height:100%;object-fit:cover}
+.feed-card .nm{position:absolute;left:14px;bottom:14px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.92);font:600 12px/1 var(--font);color:var(--ink)}
+.feed-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.feed-card:hover .ph{transform:scale(1.03)}
+@media (max-width:820px){.feed3{grid-template-columns:1fr 1fr}.feed3 .feed-card:last-child{grid-column:1/-1;aspect-ratio:2/1}}
+@media (max-width:520px){.feed3{grid-template-columns:1fr}.feed3 .feed-card:last-child{aspect-ratio:1}}
