@@ -1,7 +1,10 @@
 
 # 1080p video masters (served copies live in site/assets/video)
+# loose video masters in the project root
 *.log
 .DS_Store
+/*.mov
+/*.mp4
 /Crazy Curry/
 /Fibo Lim 16x marketing event/
 /MediSpa/
@@ -13,10 +16,7 @@
 /kendi/
 /lunarcore in action/
 /mom's ube & choloate champorado/
+/moodboard/
 /nik makino Music video/
 Thumbs.db
 node_modules/
-
-# loose video masters in the project root
-/*.mp4
-/*.mov
