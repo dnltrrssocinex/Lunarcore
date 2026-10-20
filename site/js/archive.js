@@ -39,8 +39,9 @@
   };
   const spy = () => {
     const line = innerHeight * 0.38;
-    let best = 0;
-    secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= line) best = i; });
+    /* the section whose top most recently crossed the line wins, whatever order the sidebar lists them in */
+    let best = 0, bestTop = -Infinity;
+    secs.forEach((s, i) => { const t = s.getBoundingClientRect().top; if (t <= line && t > bestTop) { bestTop = t; best = i; } });
     setOn(best);
   };
   addEventListener('scroll', spy, { passive: true });
