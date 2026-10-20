@@ -486,8 +486,10 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .scatter .pl em{position:absolute;left:50%;top:-8px;width:54px;height:16px;margin-left:-27px;background:rgba(0,0,0,.12);transform:rotate(-4deg)}
 @keyframes drop{0%,3%{opacity:0;transform:translateY(-130%) rotate(calc(var(--r) * 3));animation-timing-function:var(--bounce)}18%,86%{opacity:1;transform:rotate(var(--r));animation-timing-function:ease-in}96%,100%{opacity:0;transform:translateY(8px) rotate(var(--r))}}
 .scatter:hover .pl{animation-play-state:paused}
-.scatter .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;z-index:20;pointer-events:none}
-.scatter .c h1{font-size:clamp(40px,6.4vw,84px);text-shadow:0 0 24px #fff,0 0 8px #fff}
+.scatter .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 var(--gutter);text-align:center;z-index:20;pointer-events:none}
+/* soft white halo behind the headline block, so the shine text stays clean over the polaroids */
+.scatter .c::before{content:"";position:absolute;left:50%;top:50%;width:min(1180px,100%);height:min(520px,70%);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.97),rgba(255,255,255,.85) 60%,rgba(255,255,255,0));filter:blur(16px);z-index:-1}
+.scatter .c h1{font-size:clamp(40px,6.4vw,84px)}
 .scatter .c .lead{text-shadow:0 0 18px #fff,0 0 6px #fff}
 @media (max-width:720px){.scatter .pl{width:42%}}
 
