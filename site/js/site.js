@@ -28,10 +28,11 @@
     const open = document.body.classList.toggle('menu-open');
     toggle.setAttribute('aria-expanded', String(open));
   });
-  const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  /* links use clean addresses (photos, ./), so compare pages without .html */
+  const pageOf = (p) => { const s = p.split('#')[0].split('?')[0].replace(/^\.\/?/, '').replace(/\.html$/i, '').toLowerCase(); return s === '' || s === 'index' ? 'index' : s; };
+  const here = pageOf(location.pathname.split('/').pop());
   $$('.nav-links a, .menu a').forEach((a) => {
-    const h = (a.getAttribute('href') || '').split('#')[0].toLowerCase();
-    if (h === here) a.setAttribute('aria-current', 'page');
+    if (pageOf(a.getAttribute('href') || '') === here) a.setAttribute('aria-current', 'page');
   });
 
   /* ---------- Fade through: page transitions ---------- */
@@ -44,7 +45,7 @@
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     const page = $('.page');
     const [path, hash] = href.split('#');
-    if (path.toLowerCase() === here && hash) return; /* same page anchor */
+    if (pageOf(path) === here && hash) return; /* same page anchor */
     e.preventDefault();
     document.body.classList.remove('menu-open');
     if (!page || reduced) { location.href = href; return; }

@@ -239,14 +239,10 @@
 @media (max-width:720px){.highlights{grid-template-columns:1fr}}
 
 /* ---------- Reel ring: ambient light from the front reel ---------- */
-.ring-wrap .bg{background:radial-gradient(55% 45% at 50% 42%,rgba(60,146,239,.16),rgba(60,146,239,0) 70%),radial-gradient(35% 40% at 15% 85%,rgba(50,78,174,.12),rgba(50,78,174,0) 70%),radial-gradient(35% 40% at 85% 15%,rgba(60,146,239,.12),rgba(60,146,239,0) 70%),#F7F9FC}
-.ring-wrap .amb{position:absolute;inset:-8%;pointer-events:none;-webkit-mask-image:radial-gradient(60% 58% at 50% 46%,#000 30%,transparent 78%);mask-image:radial-gradient(60% 58% at 50% 46%,#000 30%,transparent 78%)}
-.ring-wrap .amb i{position:absolute;inset:0;background-position:center;background-size:cover;filter:blur(70px) saturate(1.5);opacity:0;transform:scale(1.15);transition:opacity 1s ease,transform 1.6s var(--ease)}
-.ring-wrap .amb i.on{opacity:.62;transform:scale(1)}
-.ring-wrap .floor{position:absolute;left:50%;bottom:9%;width:min(760px,90%);height:46%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
-.ring-wrap .grain{position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:radial-gradient(rgba(10,10,10,.08) 1px,transparent 1.2px);background-size:22px 22px;-webkit-mask-image:radial-gradient(70% 60% at 50% 50%,transparent 40%,#000 100%);mask-image:radial-gradient(70% 60% at 50% 50%,transparent 40%,#000 100%)}
+/* the ring sits straight on the site sweep, like every other section */
+.ring-wrap .bg{display:none}
+.ring-wrap .shadow{background:radial-gradient(closest-side,rgba(50,78,174,.14),rgba(50,78,174,0))}
 .ring-wrap .hint{background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-@media (prefers-reduced-motion:reduce){.ring-wrap .amb i{transition:none}}
 
 /* ---------- Video highlights (Videos page): muted reels that play in view ---------- */
 .vhl{aspect-ratio:1}

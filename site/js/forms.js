@@ -88,7 +88,7 @@
       '<h2>' + esc(title) + '</h2><p class="txt">' + esc(text) + '</p>' + rows(list) +
       '<div class="acts">' + (ics ? '<button class="btn btn-primary addcal" type="button">' + ic('cal', 16) + '<span>Add to calendar</span></button>' : '') +
       (fallbackHref ? '<a class="btn btn-primary" href="' + fallbackHref + '">' + ic('mail', 16) + '<span>Send by email</span></a>' : '') +
-      '<a class="btn btn-ghost" href="index.html">Back to home</a></div>' +
+      '<a class="btn btn-ghost" href="./">Back to home</a></div>' +
       (again ? '<a class="lk again" href="' + esc(again.href) + '">' + esc(again.label) + '</a>' : '') +
       '</div></section>' + nextPanel() + '</div>';
     host.hidden = false;

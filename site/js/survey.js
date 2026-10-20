@@ -189,7 +189,7 @@
       text: 'Thanks, ' + p.name.split(' ')[0] + '. A copy goes to ' + p.email + ' and a producer replies within the day.',
       rows,
       fallbackHref: fallback,
-      again: { label: 'Hold a date on the calendar', href: 'book.html' },
+      again: { label: 'Hold a date on the calendar', href: 'book' },
     });
   });
   render();

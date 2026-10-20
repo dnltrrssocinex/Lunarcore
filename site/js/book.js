@@ -190,7 +190,7 @@
         rows,
         ics: start ? { title: 'Lunarcore Studios: ' + p.type + ' (requested)', start, hours: p.hours, description: 'Reference ' + p.reference + '. Requested via lunarcore site, awaiting confirmation from the studio.', id: p.reference } : null,
         fallbackHref: fallback,
-        again: { label: 'Hold another date', href: 'book.html' },
+        again: { label: 'Hold another date', href: 'book' },
       });
       say(res.fallback ? 'Saved. Send it by email to finish' : 'Request sent: ' + p.reference);
     });
