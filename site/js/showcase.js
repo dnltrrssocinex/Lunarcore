@@ -100,5 +100,22 @@
       if (el && !el.contains(e.relatedTarget)) stop(el);
     });
   }
+  /* highlight reels: load and play muted only while on screen (saves data on phones) */
+  const autos = [...document.querySelectorAll('video[data-autoplay]')];
+  if (autos.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+      const vd = en.target, card = vd.closest('.vhl');
+      if (en.isIntersecting) {
+        if (!vd.src && vd.dataset.src) vd.src = vd.dataset.src;
+        const p = vd.play(); if (p && p.catch) p.catch(() => {});
+        if (card) card.classList.add('live');
+      } else {
+        vd.pause();
+        if (card) card.classList.remove('live');
+      }
+    }), { threshold: 0.35 });
+    autos.forEach((vd) => io.observe(vd));
+  }
+
   window.LC_VIDEOS = { all: VIDEOS, byId, clients: CLIENTS };
 })();
