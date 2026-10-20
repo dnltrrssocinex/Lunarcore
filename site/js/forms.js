@@ -19,7 +19,7 @@
   /* ---------- Webhook ---------- */
   const submitLead = async (payload) => {
     /* every request carries the same keys, so one GHL mapping covers survey and booking */
-    const blank = { kind: '', reference: '', name: '', email: '', phone: '', company: '', role: '', goals: [], timing: '', type: '', hours: '', slot: '', slotLabel: '', notes: '' };
+    const blank = { kind: '', reference: '', name: '', email: '', phone: '', company: '', role: '', goals: [], timing: '', type: '', hours: '', baseHours: '', extraHours: '', slot: '', slotLabel: '', notes: '' };
     const body = JSON.stringify(Object.assign({ source: 'lunarcore-site', page: location.pathname, submittedAt: new Date().toISOString() }, blank, payload, {
       /* flat, GHL-friendly extras */
       firstName: String(payload.name || '').trim().split(/\s+/)[0] || '',

@@ -105,7 +105,7 @@
     const io = new IntersectionObserver((entries) => entries.forEach((en) => {
       const vd = en.target, card = vd.closest('.vhl');
       if (en.isIntersecting) {
-        if (!vd.src && vd.dataset.src) vd.src = vd.dataset.src;
+        if (!vd.src && vd.dataset.src) vd.src = window.LCvideo ? window.LCvideo(vd.dataset.src) : vd.dataset.src;
         const p = vd.play(); if (p && p.catch) p.catch(() => {});
         if (card) card.classList.add('live');
       } else {

@@ -5,6 +5,9 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* phones play the lighter copies in assets/video/m/ (about half the size) */
+  const phone = matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+  window.LCvideo = (src) => (phone && src ? String(src).replace(/(^|\/)assets\/video\/([^/]+\.mp4)/, '$1assets/video/m/$2') : src);
   const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
   const sm = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
 
@@ -384,7 +387,7 @@
       }
       if (/\.(mp4|webm|mov)(\?|$)/i.test(src)) {
         media = document.createElement('video');
-        media.src = src; media.controls = true; media.autoplay = true; media.playsInline = true;
+        media.src = window.LCvideo(src); media.controls = true; media.autoplay = true; media.playsInline = true;
         media.addEventListener('canplay', () => ld.classList.add('off'));
       } else {
         media = document.createElement('iframe');

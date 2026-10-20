@@ -28,7 +28,9 @@ Sample booking request (this is the sample already sent):
   "goalsText": "Event coverage",
   "timing": "Fri, Oct 23, 1:30 PM",
   "type": "Event coverage",
-  "hours": 4,
+  "hours": 6,
+  "baseHours": 4,
+  "extraHours": 2,
   "slot": "2026-10-23T13:30:00+08:00",
   "slotLabel": "Fri, Oct 23, 1:30 PM",
   "notes": "SAMPLE REQUEST from the Lunarcore website for field mapping. Safe to delete."
@@ -53,6 +55,8 @@ Sample survey request (same keys; the calendar fields are empty because no slot 
   "timing": "Next month",
   "type": "",
   "hours": "",
+  "baseHours": "",
+  "extraHours": "",
   "slot": "",
   "slotLabel": "",
   "notes": "New menu launch, need reels and product photos."
@@ -60,8 +64,8 @@ Sample survey request (same keys; the calendar fields are empty because no slot 
 
 Field rules:
 - Required on both forms, so always filled: name, email, phone, company (business or brand), role, goals/goalsText (what they want to get done), timing, notes.
-- Booking only, always filled: type (the shoot they booked), hours, slot (ISO date/time in Asia/Manila) and slotLabel (the readable time slot). For bookings, goals equals the type and timing equals the slotLabel.
-- Survey: type, hours, slot and slotLabel are empty strings.
+- Booking only, always filled: type (the shoot they booked), hours (total crew time, including any extension), baseHours (the shoot type's standard time), extraHours (0, 1, 2 or 3 extra hours they added), slot (ISO date/time in Asia/Manila) and slotLabel (the readable time slot). For bookings, goals equals the type and timing equals the slotLabel.
+- Survey: type, hours, baseHours, extraHours, slot and slotLabel are empty strings.
 - role: Business owner, Marketing lead, Event organiser, Restaurant or cafe, Agency, Creator
 - goals / goalsText (survey): Event coverage, Reels and video ads, Product and food photos, Live stream, Social media management, Graphic design
 - timing (survey): This month, Next month, In 3 months or more, Not sure yet
@@ -84,7 +88,7 @@ CUSTOM FIELDS (create these on the Contact first if they don't exist)
 STEP 1 - CREATE OR UPDATE THE CONTACT
 - Find an existing contact by email first, then by phone. If found, update it; never create a duplicate.
 - First Name = firstName, Last Name = lastName, Email = email, Phone = phone (format as +63 when it starts with 09), Company Name = company.
-- Lead Type = kind, Lead Reference = reference, Role = role, Services Wanted = goalsText, Timing = timing, Shoot Type = type, Crew Hours = hours, Preferred Slot = slot, Preferred Slot Label = slotLabel, Project Notes = notes, Lead Page = page.
+- Lead Type = kind, Lead Reference = reference, Role = role, Services Wanted = goalsText, Timing = timing, Shoot Type = type, Crew Hours = hours, Base Hours = baseHours, Extension Hours = extraHours, Preferred Slot = slot, Preferred Slot Label = slotLabel, Project Notes = notes, Lead Page = page.
 - Contact Source = "Lunarcore Website".
 - Never overwrite a field that already has a value with an empty value.
 - Add tags: "website lead", plus "lead - survey" or "lead - booking" based on kind, plus one tag per service in goalsText or type (for example "svc - event coverage").
@@ -107,7 +111,7 @@ Subject: Your {{type}} slot is held - {{reference}}
 Body:
 Hi {{first name}},
 Thanks for booking with Lunarcore Studios. We've held this for you:
-- Shoot: {{type}} ({{hours}} hours)
+- Shoot: {{type}} ({{hours}} hours, including {{extraHours}} extension hours)
 - When: {{slotLabel}}
 - For: {{company}}
 - Reference: {{reference}}
@@ -131,9 +135,9 @@ If phone is not empty, also send this SMS:
 
 STEP 5 - TEAM NOTIFICATIONS
 a) Internal notification (in-app and email) to the assigned user.
-b) Email to the team inboxes: lunarcorestudios@gmail.com, plus any other producer addresses I add later.
+b) Email to the team inbox: automation.lunarcorestudios@gmail.com (this address receives every new-lead notification), plus any other producer addresses I add later.
 Subject: New {{kind}} lead: {{full name}} - {{type or goalsText}} ({{reference}})
-Body: every field from the request in a simple list, booking slot first when kind is booking: Name, Email, Phone, Company or event, Lead type, Role, Services wanted, Timing, Shoot type, Crew hours, Preferred slot (slotLabel), Notes, Page, Submitted at (convert to Asia/Manila), Reference, plus a direct link to the contact and to the opportunity in GHL.
+Body: every field from the request in a simple list, booking slot first when kind is booking: Name, Email, Phone, Company or event, Lead type, Role, Services wanted, Timing, Shoot type, Crew hours (base + extension), Preferred slot (slotLabel), Notes, Page, Submitted at (convert to Asia/Manila), Reference, plus a direct link to the contact and to the opportunity in GHL.
 Start the body with: "Reply within the day. Booking leads with a slot this week come first."
 
 STEP 6 - FOLLOW-UP TASK
