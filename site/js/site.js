@@ -162,7 +162,10 @@
       const y = last ? 0.15 : (((i * 53) % 5) - 2) * 0.3;
       return { el, x, y, z: -(1.5 + i * 1.7) };
     });
-    let prog = 0, mx = 0, my = 0, tmx = 0, tmy = 0, last = performance.now(), active = -1;
+    let prog = 0, mx = 0, my = 0, tmx = 0, tmy = 0, last = performance.now(), active = -1, force = true;
+    /* touch screens: follow the finger more tightly, and skip frames when nothing moves */
+    const follow = fine ? 6 : 12;
+    addEventListener('resize', () => (force = true));
     if (fine) addEventListener('pointermove', (e) => { tmx = e.clientX / innerWidth - 0.5; tmy = e.clientY / innerHeight - 0.5; }, { passive: true });
     const loop = (t) => {
       requestAnimationFrame(loop);
@@ -172,7 +175,10 @@
       if (r.bottom < -200) return;
       const max = wrap.offsetHeight - innerHeight;
       const target = max > 0 ? clamp01(-r.top / max) : 0;
-      prog += (target - prog) * (1 - Math.exp(-dt * 6));
+      const still = Math.abs(target - prog) < 0.0004 && Math.abs(tmx - mx) + Math.abs(tmy - my) < 0.0004;
+      if (still && !force) return;
+      force = false;
+      prog = still ? target : prog + (target - prog) * (1 - Math.exp(-dt * follow));
       mx += (tmx - mx) * (1 - Math.exp(-dt * 3));
       my += (tmy - my) * (1 - Math.exp(-dt * 3));
       const u = Math.min(300, innerWidth * 0.27);
@@ -394,6 +400,35 @@
     x.addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('on')) close(); });
+  }
+
+  /* ---------- Marquee band: repeat the phrases until each half spans the screen,
+     so the loop never shows a gap, and keep the same pace on every width ---------- */
+  const bands = $$('.band .mq');
+  const fillBands = () => bands.forEach((mq) => {
+    const seqs = mq.querySelectorAll('.seq');
+    if (seqs.length < 2) return;
+    const unit = mq.dataset.unit || (mq.dataset.unit = seqs[0].innerHTML);
+    const one = document.createElement('div');
+    one.className = 'seq';
+    one.style.visibility = 'hidden';
+    one.innerHTML = unit;
+    mq.appendChild(one);
+    const w = one.offsetWidth || 1;
+    one.remove();
+    const reps = Math.max(1, Math.ceil((mq.parentElement.clientWidth + w) / w));
+    const html = unit.repeat(reps);
+    seqs.forEach((s, i) => {
+      s.innerHTML = html;
+      s.querySelectorAll('span,svg').forEach((el, n) => { if (i || n > 3) el.setAttribute('aria-hidden', 'true'); });
+    });
+    mq.style.animationDuration = (w * reps) / 22 + 's';
+  });
+  if (bands.length) {
+    fillBands();
+    let rt = 0;
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(fillBands, 200); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fillBands);
   }
 
   /* ---------- Year ---------- */

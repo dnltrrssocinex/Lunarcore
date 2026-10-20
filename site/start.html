@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=6">
-<link rel="stylesheet" href="css/components.css?v=6">
+<link rel="stylesheet" href="css/site.css?v=18">
+<link rel="stylesheet" href="css/components.css?v=12">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230A0A0A'/%3E%3Ccircle cx='20' cy='14' r='8' fill='%23fff'/%3E%3C/svg%3E">
 </head>
 <body>
@@ -54,52 +54,62 @@
   <section class="section" style="padding-top:0">
     <div class="wrap">
       <div class="survey rv" data-delay="2">
-        <div class="steps" role="img" aria-label="Step 1 of 3" style="margin:0 6px 16px"><b>Step 1 of 3</b><i class="on"></i><i></i><i></i></div>
+        <div class="cardx sv">
+          <div class="sv-body">
+            <div class="steps" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" aria-label="Step 1 of 3"><b>Step <em>1</em> of 3</b><i class="on"></i><i></i><i></i></div>
 
-        <div class="cardx">
-          <!-- Step 1: contact -->
-          <div class="pane on">
-            <p class="eyebrow">About you</p>
-            <h2>Who are we talking to?</h2>
-            <p class="lead">Every field is needed so the right producer can reply. No newsletter, no spam.</p>
-            <div class="form" style="margin-top:22px">
-              <div class="two">
-                <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" required placeholder="Your name"><span class="err">We need a name to reply to.</span></div>
-                <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"><span class="err">That email does not look right.</span></div>
-              </div>
-              <div class="two">
-                <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+63 9xx xxx xxxx"><span class="err">Add a number we can call or text.</span></div>
-                <div class="field"><label for="s-company">Business or brand</label><input id="s-company" name="company" type="text" autocomplete="organization" required placeholder="Brand, venue or event name"><span class="err">Tell us the business or brand.</span></div>
+            <!-- Step 1: contact -->
+            <div class="pane on">
+              <h2>Who are we talking to?</h2>
+              <p class="sub">Every field is needed so the right producer can reply. No newsletter, no spam.</p>
+              <hr class="sv-rule">
+              <div class="form">
+                <div class="two">
+                  <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" required placeholder="Your name"><span class="err">We need a name to reply to.</span></div>
+                  <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"><span class="err">That email does not look right.</span></div>
+                </div>
+                <div class="two">
+                  <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+63 9xx xxx xxxx"><span class="err">Add a number we can call or text.</span></div>
+                  <div class="field"><label for="s-company">Business or brand</label><input id="s-company" name="company" type="text" autocomplete="organization" required placeholder="Brand, venue or event name"><span class="err">Tell us the business or brand.</span></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Step 2: role and goals -->
-          <div class="pane">
-            <p class="eyebrow">Tell us about you</p>
-            <h2>What describes you best?</h2>
-            <p class="lead">We plan the crew, the shot list and the deliverables around it.</p>
-            <div class="roles" role="radiogroup" aria-label="Your role"></div>
-            <div class="goalhead"><p class="gt">What do you want to get done first?</p><span class="cnt" aria-live="polite"></span></div>
-            <div class="goals"></div>
-          </div>
-
-          <!-- Step 3: timing and notes -->
-          <div class="pane">
-            <p class="eyebrow">Almost there</p>
-            <h2>When, and anything else?</h2>
-            <p class="lead">A rough timing helps us hold the right dates.</p>
-            <span class="fl">When do you need it?</span>
-            <div class="timing chips2" role="group" aria-label="Timing"></div>
-            <div class="form" style="margin-top:18px">
-              <div class="field"><label for="s-notes">Tell us about the project</label><textarea id="s-notes" name="notes" required placeholder="Venue, audience, where the footage will be used, references you like."></textarea><span class="err">A line or two is enough.</span></div>
+            <!-- Step 2: services first, role second -->
+            <div class="pane">
+              <h2>What do you want to get done first?</h2>
+              <p class="sub">We plan the crew, the shot list and the deliverables around it.</p>
+              <hr class="sv-rule">
+              <p class="sv-label" id="lbl-role">Booking as</p>
+              <div class="roles" role="radiogroup" aria-labelledby="lbl-role"></div>
+              <div class="pickhead">
+                <p class="sv-label strong" id="lbl-goals">Pick up to 3</p>
+                <span class="meter" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="cnt" aria-live="polite"></span>
+              </div>
+              <div class="goals" role="group" aria-labelledby="lbl-goals"></div>
             </div>
+
+            <!-- Step 3: timing and notes -->
+            <div class="pane">
+              <h2>When, and anything else?</h2>
+              <p class="sub">A rough timing helps us hold the right dates.</p>
+              <hr class="sv-rule">
+              <p class="sv-label" id="lbl-when">When do you need it?</p>
+              <div class="timing chips2" role="radiogroup" aria-labelledby="lbl-when"></div>
+              <div class="form" style="margin-top:22px">
+                <div class="field"><label for="s-notes">Tell us about the project</label><textarea id="s-notes" name="notes" required placeholder="Venue, audience, where the footage will be used, references you like."></textarea><span class="err">A line or two is enough.</span></div>
+              </div>
+              <p class="consent">By sending, you agree to our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms</a>.</p>
+            </div>
+
+            <p class="need" role="status" aria-live="polite"></p>
           </div>
 
-          <p class="need" role="status" aria-live="polite"></p>
-          <div class="acts2">
-            <button type="button" class="btn btn-ghost back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Back</button>
-            <button type="button" class="btn btn-primary btn-lg go"><span class="lbl">Continue</span><span class="busy">Sending</span><span class="done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sent</span></button>
+          <div class="sv-foot">
+            <button type="button" class="btn btn-ghost back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg><span class="t">Back</span></button>
+            <div class="picks" aria-live="polite"><small></small><b></b></div>
+            <button type="button" class="btn btn-primary go magnet"><span class="lb"><span class="lbl">Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span><span class="busy">Sending</span><span class="done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sent</span></span></button>
           </div>
         </div>
 
@@ -138,14 +148,14 @@
           <a href="https://www.instagram.com/lunarcorestudios" target="_blank" rel="noopener"><span>Instagram</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
         </div>
       </div>
-      <div class="bottom"><span>© <span data-year>2026</span> Lunarcore Studios</span><span>Black &amp; white edition</span></div>
+      <div class="bottom"><span>© <span data-year>2026</span> Lunarcore Studios</span><span class="legal-links"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a></span></div>
     </div>
   </footer>
 </main>
 
-<script src="js/config.js?v=5"></script>
-<script src="js/site.js?v=3" defer></script>
+<script src="js/config.js?v=6"></script>
+<script src="js/site.js?v=5" defer></script>
 <script src="js/forms.js?v=5" defer></script>
-<script src="js/survey.js?v=5" defer></script>
+<script src="js/survey.js?v=7" defer></script>
 </body>
 </html>

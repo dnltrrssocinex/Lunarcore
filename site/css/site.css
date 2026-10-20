@@ -193,16 +193,18 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 @keyframes hint{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,3px)}}
 .hero .hint svg{width:10px;height:10px}
 .hero .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 100%,rgba(255,255,255,.85) 0%,rgba(255,255,255,0) 55%);z-index:2}
+@media (max-width:720px),(pointer:coarse){.hero-wrap{height:300vh}.hero .plane{box-shadow:0 14px 32px rgba(0,0,0,.14)}.hero .tx::before{filter:none;inset:-20% -16%;background:radial-gradient(closest-side,rgba(255,255,255,.92),rgba(255,255,255,.55) 60%,rgba(255,255,255,0))}.hero .tx .eyebrow,.hero .tx .b{text-shadow:none}}
 @media (max-width:720px){.hero .rail{display:none}.hero .tx{bottom:clamp(56px,10vh,96px)}.hero .tx .act{flex-wrap:wrap}}
 
 /* ---------- Marquee CTA band ---------- */
-.band{display:block;overflow:hidden;padding:clamp(22px,3vw,34px) 0;background:var(--ink);color:#fff}
-.band .mq{display:flex;width:max-content;animation:mq 22s linear infinite}
-.band .seq{display:flex;align-items:center;flex:none;gap:34px;padding-right:34px;white-space:nowrap}
-.band .seq span{font:600 clamp(34px,6vw,72px)/1.1 var(--font);letter-spacing:-.045em}
-.band .seq svg{flex:none;width:clamp(26px,4vw,48px);height:clamp(26px,4vw,48px);opacity:.9;transition:transform var(--spring-dur) var(--spring)}
-.band:hover .mq{animation-play-state:paused}
-.band:hover .seq svg{transform:translate(4px,-4px)}
+.band{display:block;overflow:hidden;padding:clamp(16px,2vw,22px) 0;background:transparent;border-block:1px solid var(--line);color:rgba(10,10,10,.55);transition:color .35s ease}
+.band .mq{display:flex;width:max-content;animation:mq 45s linear infinite}
+.band .seq{display:flex;align-items:center;flex:none;gap:clamp(32px,4vw,60px);padding-right:clamp(32px,4vw,60px);white-space:nowrap}
+.band .seq span{font:500 clamp(22px,3vw,34px)/1.1 var(--font);letter-spacing:-.03em}
+.band .seq svg{flex:none;width:clamp(18px,2vw,24px);height:clamp(18px,2vw,24px);opacity:.7;transition:transform var(--spring-dur) var(--spring),opacity .35s ease}
+.band:hover,.band:focus-visible{color:var(--ink)}
+.band:hover .mq,.band:focus-visible .mq{animation-play-state:paused}
+.band:hover .seq svg{opacity:1;transform:translate(4px,-4px)}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ---------- Footer: link arrow nudge ---------- */
@@ -630,7 +632,6 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .nav-links a[aria-current="page"]::after{background:var(--brand)}
 .hero .rail b{background:linear-gradient(180deg,var(--brand-1),var(--brand-2))}
 .hero .rail i.on{background:var(--brand);box-shadow:0 0 0 1.5px var(--brand)}
-.band{background:linear-gradient(90deg,#3C92EF 0%,#324EAE 100%)}
 .ba .shot.after .lb{background:var(--brand-grad)}
 .svc .ic{background:var(--brand-grad);box-shadow:0 6px 14px rgba(60,146,239,.28)}
 .quotes .av{background:var(--brand-grad)}

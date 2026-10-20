@@ -7,7 +7,7 @@ window.LUNARCORE = {
   webhook: 'https://services.leadconnectorhq.com/hooks/8Dt1TvCOFxFZIl6DsomC/webhook-trigger/3Gcr9kjYdhs1jHrj57ge',
 
   /* Studio inbox used for the mailto fallback and the contact card. */
-  email: 'hello@lunarcorestudios.com',
+  email: 'lunarcorestudios@gmail.com',
 
   /* Where "Add to calendar" places the shoot. */
   location: 'Lunarcore Studios, Philippines',

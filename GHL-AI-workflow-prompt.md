@@ -97,7 +97,7 @@ STEP 2 - CREATE OR UPDATE THE OPPORTUNITY
 - Assign to the contact owner if there is one; otherwise round-robin between the producers.
 
 STEP 3 - BRANCH ON kind
-Add an If/Else on {{inboundWebhookRequest.kind}}: "booking" goes to branch A, everything else to branch B. Each branch sends the emails below. Sender name "Lunarcore Studios", from and reply-to: hello@lunarcorestudios.com.
+Add an If/Else on {{inboundWebhookRequest.kind}}: "booking" goes to branch A, everything else to branch B. Each branch sends the emails below. Sender name "Lunarcore Studios", from and reply-to: lunarcorestudios@gmail.com.
 
 STEP 4 - EMAIL TO THE CONTACT (acknowledgement)
 Send immediately. Warm, short, plain language, no hype, signed "The Lunarcore team".
@@ -131,7 +131,7 @@ If phone is not empty, also send this SMS:
 
 STEP 5 - TEAM NOTIFICATIONS
 a) Internal notification (in-app and email) to the assigned user.
-b) Email to the team inboxes: hello@lunarcorestudios.com, plus any other producer addresses I add later.
+b) Email to the team inboxes: lunarcorestudios@gmail.com, plus any other producer addresses I add later.
 Subject: New {{kind}} lead: {{full name}} - {{type or goalsText}} ({{reference}})
 Body: every field from the request in a simple list, booking slot first when kind is booking: Name, Email, Phone, Company or event, Lead type, Role, Services wanted, Timing, Shoot type, Crew hours, Preferred slot (slotLabel), Notes, Page, Submitted at (convert to Asia/Manila), Reference, plus a direct link to the contact and to the opportunity in GHL.
 Start the body with: "Reply within the day. Booking leads with a slot this week come first."
