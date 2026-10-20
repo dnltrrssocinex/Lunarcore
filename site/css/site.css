@@ -12,12 +12,19 @@
   --ink:#0A0A0A;
   --ink-2:#3A3A3C;
   --muted:#86868B;
-  --accent:#0A0A0A;
-  --accent-2:#3A3A3C;
-  --accent-ink:#000000;
-  --accent-soft:#F0F0F2;
-  --accent-line:#CFCFD4;
-  --grad:linear-gradient(135deg,#0A0A0A 0%,#3A3A3C 100%);
+  /* brand accent: CTAs and highlights only, text and surfaces stay black and white */
+  --brand-1:#3C92EF;
+  --brand-2:#324EAE;
+  --brand:#3C92EF;
+  --brand-grad:linear-gradient(135deg,#3C92EF 0%,#324EAE 100%);
+  --brand-glow:0 1px 2px rgba(50,78,174,.30),0 10px 24px rgba(60,146,239,.30);
+  --brand-glow-lg:0 2px 4px rgba(50,78,174,.30),0 16px 36px rgba(60,146,239,.38);
+  --accent:#3C92EF;
+  --accent-2:#324EAE;
+  --accent-ink:#324EAE;
+  --accent-soft:#EDF5FE;
+  --accent-line:#C3DCF9;
+  --grad:linear-gradient(135deg,#3C92EF 0%,#324EAE 100%);
   --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.07);
   --shadow-lg:0 2px 4px rgba(0,0,0,.05),0 18px 40px rgba(0,0,0,.12);
   --ease:cubic-bezier(.32,.72,0,1);
@@ -153,7 +160,7 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 @media (max-width:900px){.nav-links,.nav .cta{display:none}.nav-toggle{display:grid}}
 
 /* ---------- Shine sweep (homepage header) ---------- */
-.shine{background:linear-gradient(105deg,var(--ink) 30%,#9A9AA0 42%,#D9D9DE 50%,#9A9AA0 58%,var(--ink) 70%);background-size:260% 100%;background-position:130% 0;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:sh 4.2s linear infinite}
+.shine{background:linear-gradient(105deg,var(--ink) 30%,#324EAE 42%,#3C92EF 50%,#324EAE 58%,var(--ink) 70%);background-size:260% 100%;background-position:130% 0;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:sh 4.2s linear infinite}
 @keyframes sh{0%{background-position:130% 0}70%,100%{background-position:-30% 0}}
 .on-dark .shine{background-image:linear-gradient(105deg,#fff 30%,#8E8E93 42%,#3A3A3C 50%,#8E8E93 58%,#fff 70%)}
 
@@ -606,3 +613,34 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .hero .plane.wide{--ph:calc(var(--pw) * 9 / 16)}
 .hero .plane.portrait{--pw:min(380px,48vw);--ph:calc(var(--pw) * 4 / 3)}
 .hero .plane.square{--pw:min(440px,60vw);--ph:var(--pw)}
+
+/* ==========================================================
+   Brand accent (#3C92EF to #324EAE): CTAs and highlight states
+   ========================================================== */
+::selection{background:var(--brand-2);color:#fff}
+:focus-visible{outline-color:var(--brand)}
+.btn-primary{background:var(--brand-grad);color:#fff;box-shadow:var(--brand-glow)}
+.btn-primary:hover{background:var(--brand-grad);box-shadow:var(--brand-glow-lg);filter:saturate(1.08) brightness(1.04)}
+.btn-quiet{color:var(--brand-2)}
+.cl .dt{background:var(--brand)}
+.cl .pl{background:var(--brand-grad);box-shadow:0 8px 22px rgba(50,78,174,.35)}
+.loader .dt{background:var(--brand-grad)}
+.nav-links a[aria-current="page"]::after{background:var(--brand)}
+.hero .rail b{background:linear-gradient(180deg,var(--brand-1),var(--brand-2))}
+.hero .rail i.on{background:var(--brand);box-shadow:0 0 0 1.5px var(--brand)}
+.band{background:linear-gradient(90deg,#3C92EF 0%,#324EAE 100%)}
+.ba .shot.after .lb{background:var(--brand-grad)}
+.svc .ic{background:var(--brand-grad);box-shadow:0 6px 14px rgba(60,146,239,.28)}
+.quotes .av{background:var(--brand-grad)}
+@keyframes qd{0%{width:6px;background:var(--bar)}3%,30%{width:22px;background:var(--brand)}33.3%,100%{width:6px;background:var(--bar)}}
+.chat .av{background:var(--brand-grad)}
+.chat .m.u{background:var(--brand-grad)}
+.ring-wrap .dots i.on{background:var(--brand)}
+.gallery .ind{border-color:var(--brand)}
+.gallery .st.many .tb.on{box-shadow:inset 0 0 0 2px var(--brand)}
+.checklist .ck{background:var(--brand-grad)}
+.dd.today b{background:var(--brand-grad)}
+.evb.mine{background:var(--brand-grad);box-shadow:0 4px 12px rgba(50,78,174,.30)}
+.legend .l-mine{background:var(--brand-grad)}
+.nowl,.nowl::before,.nowl::after{background:var(--brand)}
+.field input:focus,.field textarea:focus,.field select:focus{box-shadow:inset 0 0 0 1.5px var(--brand),0 0 0 4px var(--accent-soft)}

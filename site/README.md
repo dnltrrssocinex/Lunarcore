@@ -39,7 +39,7 @@ npx serve site
 
 ## Colour
 
-Text, surfaces and buttons are black and white; photos, videos and logos are full colour (`--photo-sat: 1` in `css/site.css`, set to `0` for greyscale). The conic sweep background is tinted from `--sweep-1` (#D4EAFD). The brand accent tokens (`--accent`, `--grad`, etc.) are black for now and can take the brand blue later in the same place.
+Text and surfaces are black and white; photos, videos and logos are full colour (`--photo-sat: 1` in `css/site.css`). CTAs and highlight states (primary buttons, marquee band, selected chips and roles, active sidebar item, gallery indicator, calendar slot, headline shine) use the brand gradient #3C92EF to #324EAE via `--brand-grad`, `--brand-1`, `--brand-2` and `--brand` in `css/site.css`; the overrides sit at the end of `site.css` and `components.css`. The conic sweep background is tinted from `--sweep-1` (#D4EAFD).
 
 ## Videos
 

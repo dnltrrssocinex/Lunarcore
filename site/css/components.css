@@ -192,3 +192,17 @@
 @keyframes cs-run{0%{transform:translateY(0);opacity:0}15%{opacity:1}70%{transform:translateY(24px);opacity:1}100%{transform:translateY(24px);opacity:0}}
 @media (max-width:820px){.flow-grid{grid-template-columns:1fr}.pv{min-height:300px}}
 @media (prefers-reduced-motion:reduce){.nd,.wr i,.okring{animation:none!important}}
+
+/* ---------- Brand accent (#3C92EF to #324EAE) ---------- */
+.oc-it.on{background:var(--brand-grad);box-shadow:0 6px 16px rgba(60,146,239,.28)}
+.reel.playing .nm,.ring-wrap .card.playing .nm{background:var(--brand-grad)}
+.steps i::after{background:var(--brand-grad)}
+.role[aria-checked=true]{background:var(--brand-grad);box-shadow:0 8px 18px rgba(60,146,239,.28)}
+.goal[aria-pressed=true]{background:var(--accent-soft);box-shadow:inset 0 0 0 1.5px var(--brand)}
+.goal[aria-pressed=true] .gi,.goal[aria-pressed=true] .tk{background:var(--brand-grad)}
+.chip[aria-pressed=true]{background:var(--brand-grad)}
+.n1 .ni{background:var(--brand-grad)}
+.wr i{background:var(--brand)}
+.field.bad input,.field.bad select,.field.bad textarea{box-shadow:inset 0 0 0 1.5px var(--brand-2),0 0 0 4px var(--accent-soft)}
+.box .addcal.ok{background:var(--brand-2)}
+@keyframes cal-flash{0%,100%{box-shadow:inset 0 0 0 1px var(--line),var(--shadow)}30%{box-shadow:inset 0 0 0 2px var(--brand),0 0 0 8px var(--accent-soft)}}
