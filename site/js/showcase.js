@@ -24,7 +24,6 @@
     ['moms-sm-sta-mesa', 'moms', 'Moms opening, SM Sta. Mesa', 'reel', 'v', 90],
     ['medispa-ultherapy-1', 'medispa', 'Ultherapy procedure demo, take 1', 'film', 'v', 61],
     ['medispa-ultherapy-2', 'medispa', 'Ultherapy procedure demo, take 2', 'film', 'v', 59],
-    ['medispa-emface', 'medispa', 'Emface procedure demo', 'film', 'v', 75],
     ['banwa-pause', 'banwa', 'When was the last time you paused?', 'reel', 'v', 26],
     ['banwa-signature-massage', 'banwa', 'Signature massage', 'reel', 'v', 26],
     ['banwa-lymphatic', 'banwa', 'Lymphatic massage', 'reel', 'v', 26],
