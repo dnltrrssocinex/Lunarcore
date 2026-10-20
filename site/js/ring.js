@@ -17,6 +17,32 @@
   const dots = [...dotsEl.children];
   const pad = (n) => String(n).padStart(2, '0');
 
+  /* ambient light: the front reel's poster, blurred, cross-fading behind the ring */
+  const bg = root.querySelector('.bg');
+  const amb = document.createElement('div');
+  amb.className = 'amb';
+  amb.setAttribute('aria-hidden', 'true');
+  amb.innerHTML = '<i></i><i></i>';
+  const floor = document.createElement('div');
+  floor.className = 'floor';
+  floor.setAttribute('aria-hidden', 'true');
+  const grain = document.createElement('div');
+  grain.className = 'grain';
+  grain.setAttribute('aria-hidden', 'true');
+  if (bg) bg.after(amb, floor, grain); else root.prepend(amb, floor, grain);
+  const layers = [...amb.children];
+  let layer = 0, lastSrc = '';
+  const glow = (card) => {
+    const img = card && card.querySelector('img');
+    const src = img && (img.currentSrc || img.getAttribute('src'));
+    if (!src || src === lastSrc) return;
+    lastSrc = src;
+    layer = 1 - layer;
+    layers[layer].style.backgroundImage = 'url("' + src + '")';
+    layers[layer].classList.add('on');
+    layers[1 - layer].classList.remove('on');
+  };
+
   const R = () => {
     const cw = Math.max(150, Math.min(240, innerWidth * 0.17));
     root.style.setProperty('--cw', cw + 'px');
@@ -112,6 +138,7 @@
       capB.textContent = cards[idx].dataset.name || '';
       capS.textContent = pad(idx + 1) + ' / ' + pad(N);
       dots.forEach((d, i) => d.classList.toggle('on', i === idx));
+      glow(cards[idx]);
     }
   };
   requestAnimationFrame(loop);
