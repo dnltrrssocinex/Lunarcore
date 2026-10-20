@@ -136,6 +136,12 @@ h3{font-size:clamp(22px,2.6vw,32px);letter-spacing:-.03em}
 .nav .wrap{display:flex;align-items:center;gap:24px}
 .brand{display:flex;flex-direction:column;line-height:1;letter-spacing:.22em;font-weight:700;font-size:14px;text-transform:uppercase}
 .brand small{margin-top:4px;font:600 7.5px/1 var(--mono);letter-spacing:.48em;color:var(--muted);padding-left:.05em}
+.nav .brand{flex-direction:row;align-items:center;gap:10px}
+.brand-tx{display:flex;flex-direction:column}
+.brand-mark{flex:none;width:36px;height:36px;transition:transform var(--spring-dur) var(--spring)}
+.nav .brand:hover .brand-mark{transform:rotate(-24deg)}
+@media (max-width:720px){.brand-mark{width:32px;height:32px}}
+@media (prefers-reduced-motion:reduce){.nav .brand:hover .brand-mark{transform:none}}
 .nav-links{display:flex;gap:4px;margin-left:auto}
 .nav-links a{position:relative;padding:8px 12px;border-radius:999px;font-size:14px;font-weight:500;color:var(--ink-2);transition:color .2s ease,background-color .2s ease}
 .nav-links a:hover{color:var(--ink);background:rgba(0,0,0,.05)}
