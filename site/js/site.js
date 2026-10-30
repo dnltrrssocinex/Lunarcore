@@ -260,9 +260,12 @@
   /* ---------- Clients: logo grid cycle ---------- */
   const logos = $('.logos');
   if (logos && !reduced) {
-    const slots = $$('.cl2', logos).filter((s) => s.offsetParent !== null);
-    const cts = slots.map((s) => $('.ct', s));
     const pool = $$('.pool img', logos).map((n) => n.outerHTML);
+    /* fewer logos than tiles: hide tiles so there is always one spare to cycle in */
+    const all = $$('.cl2', logos);
+    all.forEach((s, i) => { if (i >= pool.length - 1) s.style.display = 'none'; });
+    const slots = all.filter((s) => s.offsetParent !== null);
+    const cts = slots.map((s) => $('.ct', s));
     const V = cts.length;
     if (pool.length > V) {
       let cur = cts.map((_, i) => i);
