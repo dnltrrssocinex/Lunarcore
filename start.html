@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start a project — Lunarcore Studios</title>
+<meta name="description" content="Tell Lunarcore Studios who you are and what you need. A producer replies within the day.">
+<!-- link preview -->
+<link rel="canonical" href="https://lunarcore-studios.vercel.app/start">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lunarcore Studios">
+<meta property="og:locale" content="en_PH">
+<meta property="og:title" content="Start a project — Lunarcore Studios">
+<meta property="og:description" content="Tell Lunarcore Studios who you are and what you need. A producer replies within the day.">
+<meta property="og:url" content="https://lunarcore-studios.vercel.app/start">
+<meta property="og:image" content="https://lunarcore-studios.vercel.app/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lunarcore Studios: events, reels and photography">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Start a project — Lunarcore Studios">
+<meta name="twitter:description" content="Tell Lunarcore Studios who you are and what you need. A producer replies within the day.">
+<meta name="twitter:image" content="https://lunarcore-studios.vercel.app/assets/og-cover.jpg">
+<meta name="theme-color" content="#FFFFFF">
+<!-- /link preview -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=20">
+<link rel="stylesheet" href="css/components.css?v=14">
+<link rel="icon" type="image/png" href="assets/logo-mark-64.png">
+<link rel="apple-touch-icon" href="assets/logo-mark.png">
+</head>
+<body>
+
+<div class="sweep" aria-hidden="true"><i></i></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Lunarcore Studios home"><img class="brand-mark" src="assets/logo-mark.png" alt="" width="36" height="36"><span class="brand-tx">Lunarcore<small>Studios</small></span></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="about">About us</a>
+      <a href="photos">Photos</a>
+      <a href="videos">Videos &amp; reels</a>
+      <a href="events">Events</a>
+    </nav>
+    <div class="cta">
+      <a class="btn btn-ghost" href="start">Contact us</a>
+      <a class="btn btn-primary" href="book">Book your event</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+<div class="menu">
+  <a href="./">Home</a>
+  <a href="about">About us</a>
+  <a href="photos">Photos</a>
+  <a href="videos">Videos &amp; reels</a>
+  <a href="events">Events</a>
+  <div class="menu-cta"><a class="btn btn-primary btn-lg" href="book">Book your event</a><a class="btn btn-ghost btn-lg" href="start">Contact us</a></div>
+</div>
+
+<main class="page">
+
+  <section class="page-hero" style="padding-bottom:clamp(20px,3vw,32px)">
+    <div class="wrap">
+      <p class="eyebrow rv">Start a project</p>
+      <h1 class="rv" data-delay="1" style="margin-top:18px">Tell us about <span class="shine">you.</span></h1>
+      <p class="lead rv" data-delay="2">Three quick steps. We use your answers to plan the right crew, then a producer replies within the day.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="survey rv" data-delay="2">
+        <div class="cardx sv">
+          <div class="sv-body">
+            <div class="steps" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" aria-label="Step 1 of 3"><b>Step <em>1</em> of 3</b><i class="on"></i><i></i><i></i></div>
+
+            <!-- Step 1: contact -->
+            <div class="pane on">
+              <h2>Who are we talking to?</h2>
+              <p class="sub">Every field is needed so the right producer can reply. No newsletter, no spam.</p>
+              <hr class="sv-rule">
+              <div class="form">
+                <div class="two">
+                  <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" required placeholder="Your name"><span class="err">We need a name to reply to.</span></div>
+                  <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"><span class="err">That email does not look right.</span></div>
+                </div>
+                <div class="two">
+                  <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+63 9xx xxx xxxx"><span class="err">Add a number we can call or text.</span></div>
+                  <div class="field"><label for="s-company">Business or brand</label><input id="s-company" name="company" type="text" autocomplete="organization" required placeholder="Brand, venue or event name"><span class="err">Tell us the business or brand.</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: services first, role second -->
+            <div class="pane">
+              <h2>What do you want to get done first?</h2>
+              <p class="sub">We plan the crew, the shot list and the deliverables around it.</p>
+              <hr class="sv-rule">
+              <p class="sv-label" id="lbl-role">Booking as</p>
+              <div class="roles" role="radiogroup" aria-labelledby="lbl-role"></div>
+              <div class="pickhead">
+                <p class="sv-label strong" id="lbl-goals">Pick up to 3</p>
+                <span class="meter" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="cnt" aria-live="polite"></span>
+              </div>
+              <div class="goals" role="group" aria-labelledby="lbl-goals"></div>
+            </div>
+
+            <!-- Step 3: timing and notes -->
+            <div class="pane">
+              <h2>When, and anything else?</h2>
+              <p class="sub">A rough timing helps us hold the right dates.</p>
+              <hr class="sv-rule">
+              <p class="sv-label" id="lbl-when">When do you need it?</p>
+              <div class="timing chips2" role="radiogroup" aria-labelledby="lbl-when"></div>
+              <div class="form" style="margin-top:22px">
+                <div class="field"><label for="s-notes">Tell us about the project</label><textarea id="s-notes" name="notes" required placeholder="Venue, audience, where the footage will be used, references you like."></textarea><span class="err">A line or two is enough.</span></div>
+              </div>
+              <p class="consent">By sending, you agree to our <a href="privacy">Privacy Policy</a> and <a href="terms">Terms</a>.</p>
+            </div>
+
+            <p class="need" role="status" aria-live="polite"></p>
+          </div>
+
+          <div class="sv-foot">
+            <button type="button" class="btn btn-ghost back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg><span class="t">Back</span></button>
+            <div class="picks" aria-live="polite"><small></small><b></b></div>
+            <button type="button" class="btn btn-primary go magnet"><span class="lb"><span class="lbl">Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span><span class="busy">Sending</span><span class="done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sent</span></span></button>
+          </div>
+        </div>
+
+        <div class="flow" hidden aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <a class="band" href="book" aria-label="Book your event">
+    <div class="mq">
+      <div class="seq"><span>Book your event</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span>Let’s shoot something</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+      <div class="seq" aria-hidden="true"><span>Book your event</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg><span>Let’s shoot something</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    </div>
+  </a>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <a class="brand" href="./">Lunarcore<small>Studios</small></a>
+          <p class="note">Event production, brand content and photography. We plan, we shoot, we deliver.</p>
+        </div>
+        <div class="col"><h6>Work</h6>
+          <a href="photos"><span>Photos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="videos"><span>Videos &amp; reels</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="events"><span>Events</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        </div>
+        <div class="col"><h6>Studio</h6>
+          <a href="about"><span>About us</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="./#how"><span>How we work</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="./#faq"><span>FAQ</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        </div>
+        <div class="col"><h6>Connect</h6>
+          <a href="book"><span>Book your event</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="start"><span>Start a project</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+          <a href="https://www.instagram.com/lunarcorestudios" target="_blank" rel="noopener"><span>Instagram</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+      <div class="bottom"><span>© <span data-year>2026</span> Lunarcore Studios</span><span class="legal-links"><a href="privacy">Privacy Policy</a><a href="terms">Terms &amp; Conditions</a><a href="refund">Refund Policy</a><a href="accessibility">Accessibility</a></span></div>
+    </div>
+  </footer>
+</main>
+
+<script src="js/config.js?v=6"></script>
+<script src="js/site.js?v=7" defer></script>
+<script src="js/forms.js?v=7" defer></script>
+<script src="js/survey.js?v=8" defer></script>
+</body>
+</html>
